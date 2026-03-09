@@ -1,4 +1,6 @@
-import type { Metadata } from "next"
+"use client"
+
+import { useRef } from "react"
 import Link from "next/link"
 import {
   ArrowRight,
@@ -15,16 +17,10 @@ import {
   ShieldCheck,
   Briefcase,
 } from "lucide-react"
-import { SectionWrapper } from "@/components/section-wrapper"
+import { motion, useScroll, useTransform } from "motion/react"
 import { FadeIn } from "@/components/fade-in"
 import { StarRating } from "@/components/star-rating"
 import { LogoMarquee } from "@/components/logo-marquee"
-
-export const metadata: Metadata = {
-  title: "Services pour Professionnels | Artigold",
-  description:
-    "Projets BTP pour commerces, bureaux, industrie et promoteurs. Artigold, entreprise tous corps d'état, votre partenaire de confiance.",
-}
 
 const domains = [
   {
@@ -139,6 +135,26 @@ const references = [
 ]
 
 export default function ProfessionnelPage() {
+  const domainsRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress: domainsProgress } = useScroll({ target: domainsRef, offset: ["start start", "end end"] })
+  const domainsX = useTransform(domainsProgress, [0, 1], ["0%", "-75%"])
+
+  const stepsRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress: stepsProgress } = useScroll({ target: stepsRef, offset: ["start start", "end end"] })
+  const stepsX = useTransform(stepsProgress, [0, 1], ["0%", "-75%"])
+
+  const advantagesRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress: advantagesProgress } = useScroll({ target: advantagesRef, offset: ["start start", "end end"] })
+  const advantagesX = useTransform(advantagesProgress, [0, 1], ["0%", "-75%"])
+
+  const refsRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress: refsProgress } = useScroll({ target: refsRef, offset: ["start start", "end end"] })
+  const refsX = useTransform(refsProgress, [0, 1], ["0%", "-75%"])
+
+  const caseStudiesRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress: caseStudiesProgress } = useScroll({ target: caseStudiesRef, offset: ["start start", "end end"] })
+  const caseStudiesX = useTransform(caseStudiesProgress, [0, 1], ["0%", "-50%"])
+
   return (
     <div className="bg-[#111111]">
       {/* Hero */}
@@ -196,82 +212,75 @@ export default function ProfessionnelPage() {
         </FadeIn>
       </section>
 
-      {/* Domains */}
-      <SectionWrapper variant="dark">
-        <FadeIn>
-          <div className="text-center">
+      {/* Domains — horizontal scroll */}
+      <div ref={domainsRef} className="relative h-[400vh]">
+        <div className="sticky top-0 flex h-screen flex-col items-center justify-center gap-10 overflow-hidden bg-[#111111] py-16">
+          <div className="px-6 text-center">
             <p className="text-sm font-semibold uppercase tracking-wider text-gold">
               Nos domaines d'intervention
             </p>
             <h2 className="mt-3 text-balance text-3xl font-bold text-white md:text-4xl">
-              Des solutions adaptees a <span className="font-playfair italic text-gold ">chaque secteur</span>
+              Des solutions adaptées à <span className="font-playfair italic text-gold">chaque secteur</span>
             </h2>
           </div>
-        </FadeIn>
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {domains.map((domain, i) => (
-            <FadeIn key={domain.title} delay={i * 100}>
-              <div className="flex h-full flex-col items-center rounded-2xl border border-white/10 bg-white/5 p-8 text-center transition-colors hover:border-gold/30 hover:bg-white/[0.08]">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gold/10">
-                  <domain.icon className="h-7 w-7 text-gold" />
+          <div className="w-full overflow-hidden">
+            <motion.div
+              style={{ x: domainsX }}
+              className="flex w-[400vw]"
+            >
+              {domains.map((domain) => (
+                <div key={domain.title} className="flex w-screen shrink-0 items-center justify-center px-8">
+                  <div className="flex w-full max-w-lg flex-col items-center rounded-2xl border border-white/10 bg-white/5 p-10 text-center transition-colors hover:border-gold/30 hover:bg-white/8">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gold/10">
+                      <domain.icon className="h-8 w-8 text-gold" />
+                    </div>
+                    <h3 className="mt-6 text-2xl font-bold text-white">{domain.title}</h3>
+                    <p className="mt-4 text-base leading-relaxed text-white/60">{domain.description}</p>
+                  </div>
                 </div>
-                <h3 className="mt-5 text-lg font-bold text-white">
-                  {domain.title}
-                </h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-white/60">
-                  {domain.description}
-                </p>
-                <Link
-                  href="/contact?type=professionnel"
-                  className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-gold transition-colors hover:text-gold-light"
-                >
-                  {/* {"Étudier mon projet"}
-                  <ArrowRight className="h-4 w-4" /> */}
-                </Link>
-              </div>
-            </FadeIn>
-          ))}
+              ))}
+            </motion.div>
+          </div>
         </div>
-      </SectionWrapper>
+      </div>
 
-      {/* Process / Timeline */}
-      <SectionWrapper variant="dark-muted">
-        <FadeIn>
-          <div className="text-center">
+      {/* Process — horizontal scroll */}
+      <div ref={stepsRef} className="relative h-[400vh]">
+        <div className="sticky top-0 flex h-screen flex-col items-center justify-center gap-10 overflow-hidden bg-[#0d0d0d] py-16">
+          <div className="px-6 text-center">
             <p className="text-sm font-semibold uppercase tracking-wider text-gold">
-              Notre methodologie
+              Notre méthodologie
             </p>
             <h2 className="mt-3 text-balance text-3xl font-bold text-white md:text-4xl">
               Notre approche <span className="font-playfair italic text-gold">projet</span>
             </h2>
           </div>
-        </FadeIn>
-        <div className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {steps.map((s, i) => (
-            <FadeIn key={s.step} delay={i * 100}>
-              <div className="relative flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-6">
-                <span className="text-3xl font-bold text-gold/20">
-                  {s.step}
-                </span>
-                <div className="mt-3 flex h-10 w-10 items-center justify-center rounded-lg bg-gold/10">
-                  <s.icon className="h-5 w-5 text-gold" />
+          <div className="w-full overflow-hidden">
+            <motion.div
+              style={{ x: stepsX }}
+              className="flex w-[400vw]"
+            >
+              {steps.map((s) => (
+                <div key={s.step} className="flex w-screen shrink-0 items-center justify-center px-8">
+                  <div className="relative flex w-full max-w-lg flex-col rounded-2xl border border-white/10 bg-white/5 p-10">
+                    <span className="text-5xl font-bold text-gold/20">{s.step}</span>
+                    <div className="mt-4 flex h-12 w-12 items-center justify-center rounded-lg bg-gold/10">
+                      <s.icon className="h-6 w-6 text-gold" />
+                    </div>
+                    <h3 className="mt-5 text-xl font-bold text-white">{s.title}</h3>
+                    <p className="mt-3 text-base leading-relaxed text-white/60">{s.description}</p>
+                  </div>
                 </div>
-                <h3 className="mt-4 text-base font-bold text-white">
-                  {s.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/60">
-                  {s.description}
-                </p>
-              </div>
-            </FadeIn>
-          ))}
+              ))}
+            </motion.div>
+          </div>
         </div>
-      </SectionWrapper>
+      </div>
 
-      {/* Why Artigold */}
-      <SectionWrapper variant="dark">
-        <FadeIn>
-          <div className="text-center">
+      {/* Advantages — horizontal scroll */}
+      <div ref={advantagesRef} className="relative h-[400vh]">
+        <div className="sticky top-0 flex h-screen flex-col items-center justify-center gap-10 overflow-hidden bg-[#111111] py-16">
+          <div className="px-6 text-center">
             <p className="text-sm font-semibold uppercase tracking-wider text-gold">
               Nos garanties
             </p>
@@ -279,66 +288,68 @@ export default function ProfessionnelPage() {
               Arguments & <span className="font-playfair italic text-gold">garanties</span>
             </h2>
           </div>
-        </FadeIn>
-        <div className="mt-14 grid gap-6 sm:grid-cols-2">
-          {advantages.map((adv, i) => (
-            <FadeIn key={adv.title} delay={i * 100}>
-              <div className="flex h-full gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 transition-colors hover:border-gold/30 hover:bg-white/[0.08]">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gold/10">
-                  <adv.icon className="h-6 w-6 text-gold" />
+          <div className="w-full overflow-hidden">
+            <motion.div
+              style={{ x: advantagesX }}
+              className="flex w-[400vw]"
+            >
+              {advantages.map((adv) => (
+                <div key={adv.title} className="flex w-screen shrink-0 items-center justify-center px-8">
+                  <div className="flex w-full max-w-lg gap-6 rounded-2xl border border-white/10 bg-white/5 p-10 transition-colors hover:border-gold/30 hover:bg-white/8">
+                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gold/10">
+                      <adv.icon className="h-7 w-7 text-gold" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-white">{adv.title}</h3>
+                      <p className="mt-3 text-base leading-relaxed text-white/60">{adv.description}</p>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-bold text-white">
-                    {adv.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-white/60">
-                    {adv.description}
-                  </p>
-                </div>
-              </div>
-            </FadeIn>
-          ))}
+              ))}
+            </motion.div>
+          </div>
         </div>
-      </SectionWrapper>
+      </div>
 
-      {/* References */}
-      <SectionWrapper variant="dark-muted">
-        <FadeIn>
-          <div className="text-center">
+      {/* References — horizontal scroll */}
+      <div ref={refsRef} className="relative h-[400vh]">
+        <div className="sticky top-0 flex h-screen flex-col items-center justify-center gap-10 overflow-hidden bg-[#0d0d0d] py-16">
+          <div className="px-6 text-center">
             <p className="text-sm font-semibold uppercase tracking-wider text-gold">
-              References
+              Références
             </p>
             <h2 className="mt-3 text-balance text-3xl font-bold text-white md:text-4xl">
               Quelques <span className="font-playfair italic text-gold">projets types</span>
             </h2>
           </div>
-        </FadeIn>
-        <div className="mt-14 grid gap-6 sm:grid-cols-2">
-          {references.map((ref, i) => (
-            <FadeIn key={ref.title} delay={i * 100}>
-              <div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 transition-colors hover:border-gold/30 hover:bg-white/[0.08]">
-                <div className="flex items-center justify-between">
-                  <span className="rounded-md bg-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-gold">
-                    {ref.category}
-                  </span>
-                  <span className="text-sm font-semibold text-white/80">
-                    {ref.surface}
-                  </span>
+          <div className="w-full overflow-hidden">
+            <motion.div
+              style={{ x: refsX }}
+              className="flex w-[400vw]"
+            >
+              {references.map((ref) => (
+                <div key={ref.title} className="flex w-screen shrink-0 items-center justify-center px-8">
+                  <div className="flex w-full max-w-lg flex-col gap-5 rounded-2xl border border-white/10 bg-white/5 p-10 transition-colors hover:border-gold/30 hover:bg-white/8">
+                    <div className="flex items-center justify-between">
+                      <span className="rounded-md bg-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-gold">
+                        {ref.category}
+                      </span>
+                      <span className="text-base font-semibold text-white/80">{ref.surface}</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white">{ref.title}</h3>
+                    <p className="text-base text-white/50">{ref.highlight}</p>
+                  </div>
                 </div>
-                <h3 className="text-base font-bold text-white">
-                  {ref.title}
-                </h3>
-                <p className="text-sm text-white/50">{ref.highlight}</p>
-              </div>
-            </FadeIn>
-          ))}
+              ))}
+            </motion.div>
+          </div>
         </div>
-      </SectionWrapper>
+      </div>
 
-      {/* Etudes de cas */}
-      <SectionWrapper variant="dark">
-        <FadeIn>
-          <div className="text-center">
+      {/* Etudes de cas — horizontal scroll */}
+      <div ref={caseStudiesRef} className="relative h-[200vh]">
+        <div className="sticky top-0 flex h-screen flex-col items-center justify-center gap-10 overflow-hidden bg-[#111111] py-16">
+          <div className="px-6 text-center">
             <p className="text-sm font-semibold uppercase tracking-wider text-gold">
               {"Études de cas"}
             </p>
@@ -346,59 +357,64 @@ export default function ProfessionnelPage() {
               Avant / <span className="font-playfair italic text-gold">Après</span>
             </h2>
           </div>
-        </FadeIn>
-        <div className="mt-14 grid gap-8 md:grid-cols-2">
-          {[
-            {
-              title: "Rénovation d'un hall d'accueil corporate",
-              before: "Hall vieillissant, éclairage inadapté, sols dégradés",
-              after: "Espace modernisé avec sol en pierre naturelle, éclairage LED et signalétique intégrée",
-              figures: [
-                { label: "Surface", value: "320 m\u00B2" },
-                { label: "Durée", value: "6 semaines" },
-                { label: "Activité", value: "Maintenue" },
-              ],
-            },
-            {
-              title: "Mise aux normes PMR d'un ERP",
-              before: "Bâtiment non conforme aux normes d'accessibilité PMR et sécurité incendie",
-              after: "Mise en conformité totale : rampes, sanitaires adaptés, alarmes incendie, balisage",
-              figures: [
-                { label: "Surface", value: "1 400 m\u00B2" },
-                { label: "Durée", value: "10 semaines" },
-                { label: "Conformité", value: "100%" },
-              ],
-            },
-          ].map((cs, i) => (
-            <FadeIn key={cs.title} delay={i * 150}>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-8 transition-colors hover:border-gold/30">
-                <h3 className="text-lg font-bold text-white">{cs.title}</h3>
-                <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-white/40">Avant</p>
-                    <p className="mt-2 text-sm leading-relaxed text-white/60">{cs.before}</p>
-                  </div>
-                  <div className="rounded-xl border border-gold/20 bg-gold/5 p-4">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-gold">Après</p>
-                    <p className="mt-2 text-sm leading-relaxed text-white/70">{cs.after}</p>
-                  </div>
-                </div>
-                <div className="mt-6 flex flex-wrap gap-6">
-                  {cs.figures.map((fig) => (
-                    <div key={fig.label}>
-                      <p className="text-2xl font-bold text-gold">{fig.value}</p>
-                      <p className="text-xs text-white/50">{fig.label}</p>
+          <div className="w-full overflow-hidden">
+            <motion.div
+              style={{ x: caseStudiesX }}
+              className="flex w-[200vw]"
+            >
+              {[
+                {
+                  title: "Rénovation d'un hall d'accueil corporate",
+                  before: "Hall vieillissant, éclairage inadapté, sols dégradés",
+                  after: "Espace modernisé avec sol en pierre naturelle, éclairage LED et signalétique intégrée",
+                  figures: [
+                    { label: "Surface", value: "320 m\u00B2" },
+                    { label: "Durée", value: "6 semaines" },
+                    { label: "Activité", value: "Maintenue" },
+                  ],
+                },
+                {
+                  title: "Mise aux normes PMR d'un ERP",
+                  before: "Bâtiment non conforme aux normes d'accessibilité PMR et sécurité incendie",
+                  after: "Mise en conformité totale : rampes, sanitaires adaptés, alarmes incendie, balisage",
+                  figures: [
+                    { label: "Surface", value: "1 400 m\u00B2" },
+                    { label: "Durée", value: "10 semaines" },
+                    { label: "Conformité", value: "100%" },
+                  ],
+                },
+              ].map((cs) => (
+                <div key={cs.title} className="flex w-screen shrink-0 items-center justify-center px-8">
+                  <div className="w-full max-w-2xl rounded-2xl border border-white/10 bg-white/5 p-10 transition-colors hover:border-gold/30">
+                    <h3 className="text-2xl font-bold text-white">{cs.title}</h3>
+                    <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                      <div className="rounded-xl border border-white/10 bg-white/5 p-5">
+                        <p className="text-xs font-semibold uppercase tracking-wider text-white/40">Avant</p>
+                        <p className="mt-2 text-sm leading-relaxed text-white/60">{cs.before}</p>
+                      </div>
+                      <div className="rounded-xl border border-gold/20 bg-gold/5 p-5">
+                        <p className="text-xs font-semibold uppercase tracking-wider text-gold">Après</p>
+                        <p className="mt-2 text-sm leading-relaxed text-white/70">{cs.after}</p>
+                      </div>
                     </div>
-                  ))}
+                    <div className="mt-8 flex flex-wrap gap-8">
+                      {cs.figures.map((fig) => (
+                        <div key={fig.label}>
+                          <p className="text-2xl font-bold text-gold">{fig.value}</p>
+                          <p className="text-xs text-white/50">{fig.label}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </FadeIn>
-          ))}
+              ))}
+            </motion.div>
+          </div>
         </div>
-      </SectionWrapper>
+      </div>
 
       {/* Histoire & Mission */}
-      <SectionWrapper variant="dark-muted">
+      <section className="bg-[#0d0d0d] px-6 py-20 md:py-28">
         <div className="mx-auto max-w-3xl text-center">
           <FadeIn>
             <p className="text-sm font-semibold uppercase tracking-wider text-gold">
@@ -430,17 +446,17 @@ export default function ProfessionnelPage() {
             </Link>
           </FadeIn>
         </div>
-      </SectionWrapper>
+      </section>
 
       {/* CTA */}
-      <SectionWrapper variant="dark">
+      <section className="bg-[#111111] px-6 py-20 md:py-28">
         <FadeIn>
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-balance text-3xl font-bold text-white md:text-4xl">
-              Un projet professionnel a <span className="font-playfair italic text-gold">discuter</span> ?
+              Un projet professionnel à <span className="font-playfair italic text-gold">discuter</span> ?
             </h2>
             <p className="mt-4 text-base leading-relaxed text-white/60">
-              Echangez avec un chef de projet Artigold pour obtenir une proposition technique adaptee a vos enjeux.
+              Échangez avec un chef de projet Artigold pour obtenir une proposition technique adaptée à vos enjeux.
             </p>
             <Link
               href="/contact?type=professionnel"
@@ -451,7 +467,7 @@ export default function ProfessionnelPage() {
             </Link>
           </div>
         </FadeIn>
-      </SectionWrapper>
+      </section>
     </div>
   )
 }

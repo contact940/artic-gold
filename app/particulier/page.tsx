@@ -1,33 +1,29 @@
-import type { Metadata } from "next"
+"use client"
+
+import { useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import {
   ArrowRight,
   Clock,
   Leaf,
-  Wallet,
   MessageCircle,
   Home,
   Bath,
   Flame,
   Paintbrush,
   Quote,
-  ChevronDown,
   ClipboardList,
   FileText,
   HardHat,
   CheckCircle2,
   Key,
+  ChevronDown,
 } from "lucide-react"
-import { SectionWrapper } from "@/components/section-wrapper"
+import { motion, useScroll, useTransform } from "motion/react"
 import { FadeIn } from "@/components/fade-in"
 import { StarRating } from "@/components/star-rating"
-
-export const metadata: Metadata = {
-  title: "Rénovation pour Particuliers | Artigold - Entreprise Tous Corps d'État",
-  description:
-    "Rénovation de maison et appartement : rénovation énergétique, intérieure, complète clé en main. Délais garantis et budget maîtrisé. Devis gratuit avec Artigold.",
-}
+import { SectionWrapper } from "@/components/section-wrapper"
 
 const values = [
   {
@@ -171,6 +167,27 @@ const faqs = [
 ]
 
 export default function ParticulierPage() {
+  // ── processSteps horizontal scroll (4 items → 400vh) ──────────
+  const processRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress: processProgress } = useScroll({ target: processRef, offset: ["start start", "end end"] })
+  const processX = useTransform(processProgress, [0, 1], ["0%", "-75%"])
+
+  // ── services horizontal scroll (4 items → 400vh) ──────────────
+  const servicesRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress: servicesProgress } = useScroll({ target: servicesRef, offset: ["start start", "end end"] })
+  const servicesX = useTransform(servicesProgress, [0, 1], ["0%", "-75%"])
+
+  // ── values horizontal scroll (4 items → 400vh) ────────────────
+  const valuesRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress: valuesProgress } = useScroll({ target: valuesRef, offset: ["start start", "end end"] })
+  const valuesX = useTransform(valuesProgress, [0, 1], ["0%", "-75%"])
+
+  // ── testimonials horizontal scroll (3 items → 300vh) ──────────
+  const testimonialsRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress: testimonialsProgress } = useScroll({ target: testimonialsRef, offset: ["start start", "end end"] })
+  const testimonialsX = useTransform(testimonialsProgress, [0, 1], ["0%", "-66.67%"])
+
+
   return (
     <>
       {/* Hero */}
@@ -219,156 +236,138 @@ export default function ParticulierPage() {
         </div>
       </section>
 
-      {/* Processus */}
-      <SectionWrapper>
-        <FadeIn>
-          <div className="text-center">
-            <p className="text-sm font-semibold uppercase tracking-wider text-gold">
-              Comment ça marche
-            </p>
-            <h2 className="mt-3 text-balance text-3xl font-bold text-foreground md:text-4xl">
-              Comment ça se passe <span className="font-playfair italic text-gold">concrètement</span> ?
-            </h2>
-          </div>
-        </FadeIn>
-        <div className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {processSteps.map((s, i) => (
-            <FadeIn key={s.step} delay={i * 100}>
-              <div className="relative flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-sm">
-                <span className="text-3xl font-bold text-gold/20">
-                  {s.step}
-                </span>
-                <div className="mt-3 flex h-10 w-10 items-center justify-center rounded-lg bg-gold/10">
-                  <s.icon className="h-5 w-5 text-gold" />
-                </div>
-                <h3 className="mt-4 text-base font-bold text-card-foreground">
-                  {s.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {s.description}
-                </p>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
-      </SectionWrapper>
-
-      {/* Services */}
-      <SectionWrapper>
-        <FadeIn>
-          <div className="text-center">
-            <p className="text-sm font-semibold uppercase tracking-wider text-gold">
-              Nos expertises
-            </p>
-            <h2 className="mt-3 text-balance text-3xl font-bold text-foreground md:text-4xl">
-              Nos travaux pour les <span className="font-playfair italic text-gold">particuliers</span>
-            </h2>
-          </div>
-        </FadeIn>
-        <div className="mt-14 grid gap-8 sm:grid-cols-2">
-          {services.map((service, i) => (
-            <FadeIn key={service.title} delay={i * 100}>
-              <div className="flex h-full flex-col rounded-2xl border border-border bg-card p-8 shadow-sm transition-shadow hover:shadow-lg">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gold/10">
-                  <service.icon className="h-7 w-7 text-gold" />
-                </div>
-                <h3 className="mt-6 text-xl font-bold text-card-foreground">
-                  {service.title}
-                </h3>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
-                  {service.description}
-                </p>
-                <Link
-                  href="/contact?type=particulier"
-                  className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-gold transition-colors hover:text-gold-dark"
-                >
-                  {service.cta}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
-      </SectionWrapper>
-
-      {/* Engagements */}
-      <SectionWrapper variant="muted">
-        <FadeIn>
-          <div className="text-center">
-            <p className="text-sm font-semibold uppercase tracking-wider text-gold">
-              Nos engagements
-            </p>
-            <h2 className="mt-3 text-balance text-3xl font-bold text-foreground md:text-4xl">
-              Pourquoi nous faire <span className="font-playfair italic text-gold">confiance</span> ?
-            </h2>
-          </div>
-        </FadeIn>
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {values.map((item, i) => (
-            <FadeIn key={item.title} delay={i * 100}>
-              <div className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-md">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10">
-                  <item.icon className="h-6 w-6 text-gold" />
-                </div>
-                <h3 className="mt-5 text-lg font-bold text-card-foreground">
-                  {item.title}
-                </h3>
-                {/* <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {item.description}
-                </p> */}
-              </div>
-            </FadeIn>
-          ))}
-        </div>
-      </SectionWrapper>
-
-      {/* Testimonials */}
-      <SectionWrapper>
-        <FadeIn>
-          <div className="text-center">
-            <p className="text-sm font-semibold uppercase tracking-wider text-gold">
-              Temoignages
-            </p>
-            <h2 className="mt-3 text-balance text-3xl font-bold text-foreground md:text-4xl">
-              Ce que disent nos <span className="font-playfair italic text-gold">clients</span>
-            </h2>
-            <div className="mx-auto mt-4 flex items-center justify-center gap-3">
-              <StarRating rating={4.8} />
-              <span className="text-sm text-muted-foreground">
-                sur la base de nos avis clients
-              </span>
+      {/* ── Processus — Horizontal scroll (4 slides × 100vw = 400vw) ── */}
+      <div ref={processRef} className="relative h-[400vh]">
+        <div className="sticky top-0 flex h-screen flex-col items-center justify-center gap-10 overflow-hidden bg-background py-16">
+          <FadeIn>
+            <div className="px-6 text-center">
+              <p className="text-sm font-semibold uppercase tracking-wider text-gold">Comment ça marche</p>
+              <h2 className="mt-3 text-balance text-3xl font-bold text-foreground md:text-4xl">
+                Comment ça se passe <span className="font-playfair italic text-gold">concrètement</span> ?
+              </h2>
             </div>
-          </div>
-        </FadeIn>
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
-          {testimonials.map((t, i) => (
-            <FadeIn key={t.name} delay={i * 100}>
-              <div className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-sm">
-                <Quote className="h-8 w-8 text-gold/40" />
-                <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground italic">
-                  {`"${t.quote}"`}
-                </p>
-                <div className="mt-6 border-t border-border pt-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-semibold text-card-foreground">
-                        {t.name}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {t.project}
-                      </p>
+          </FadeIn>
+          <div className="w-full overflow-hidden">
+            <motion.div className="flex w-[400vw]" style={{ x: processX }}>
+              {processSteps.map((s) => (
+                <div key={s.step} className="flex w-screen items-center justify-center px-6">
+                  <div className="relative flex w-full max-w-sm flex-col rounded-2xl border border-border bg-card p-8 shadow-sm">
+                    <span className="text-3xl font-bold text-gold/20">{s.step}</span>
+                    <div className="mt-3 flex h-10 w-10 items-center justify-center rounded-lg bg-gold/10">
+                      <s.icon className="h-5 w-5 text-gold" />
                     </div>
-                    <StarRating rating={t.rating} className="scale-75 origin-right" />
+                    <h3 className="mt-4 text-base font-bold text-card-foreground">{s.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.description}</p>
                   </div>
                 </div>
-              </div>
-            </FadeIn>
-          ))}
+              ))}
+            </motion.div>
+          </div>
         </div>
-      </SectionWrapper>
+      </div>
 
-      {/* WhatsApp */}
-      <SectionWrapper variant="muted">
+      {/* ── Services — Horizontal scroll (4 slides × 100vw = 400vw) ── */}
+      <div ref={servicesRef} className="relative h-[400vh]">
+        <div className="sticky top-0 flex h-screen flex-col items-center justify-center gap-10 overflow-hidden bg-secondary py-16">
+          <FadeIn>
+            <div className="px-6 text-center">
+              <p className="text-sm font-semibold uppercase tracking-wider text-gold">Nos expertises</p>
+              <h2 className="mt-3 text-balance text-3xl font-bold text-foreground md:text-4xl">
+                Nos travaux pour les <span className="font-playfair italic text-gold">particuliers</span>
+              </h2>
+            </div>
+          </FadeIn>
+          <div className="w-full overflow-hidden">
+            <motion.div className="flex w-[400vw]" style={{ x: servicesX }}>
+              {services.map((service) => (
+                <div key={service.title} className="flex w-screen items-center justify-center px-6">
+                  <div className="flex w-full max-w-sm flex-col rounded-2xl border border-border bg-card p-8 shadow-sm transition-shadow hover:shadow-lg">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gold/10">
+                      <service.icon className="h-7 w-7 text-gold" />
+                    </div>
+                    <h3 className="mt-6 text-xl font-bold text-card-foreground">{service.title}</h3>
+                    <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{service.description}</p>
+                    <Link href="/contact?type=particulier" className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-gold transition-colors hover:text-gold-dark">
+                      {service.cta}<ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Engagements — Horizontal scroll (4 slides × 100vw = 400vw) ── */}
+      <div ref={valuesRef} className="relative h-[400vh]">
+        <div className="sticky top-0 flex h-screen flex-col items-center justify-center gap-10 overflow-hidden bg-background py-16">
+          <FadeIn>
+            <div className="px-6 text-center">
+              <p className="text-sm font-semibold uppercase tracking-wider text-gold">Nos engagements</p>
+              <h2 className="mt-3 text-balance text-3xl font-bold text-foreground md:text-4xl">
+                Pourquoi nous faire <span className="font-playfair italic text-gold">confiance</span> ?
+              </h2>
+            </div>
+          </FadeIn>
+          <div className="w-full overflow-hidden">
+            <motion.div className="flex w-[400vw]" style={{ x: valuesX }}>
+              {values.map((item) => (
+                <div key={item.title} className="flex w-screen items-center justify-center px-6">
+                  <div className="flex w-full max-w-sm flex-col rounded-2xl border border-border bg-card p-8 shadow-sm transition-shadow hover:shadow-md">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10">
+                      <item.icon className="h-6 w-6 text-gold" />
+                    </div>
+                    <h3 className="mt-5 text-lg font-bold text-card-foreground">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Testimonials — Horizontal scroll (3 slides × 100vw = 300vw) ── */}
+      <div ref={testimonialsRef} className="relative h-[300vh]">
+        <div className="sticky top-0 flex h-screen flex-col items-center justify-center gap-10 overflow-hidden bg-secondary py-16">
+          <FadeIn>
+            <div className="px-6 text-center">
+              <p className="text-sm font-semibold uppercase tracking-wider text-gold">Temoignages</p>
+              <h2 className="mt-3 text-balance text-3xl font-bold text-foreground md:text-4xl">
+                Ce que disent nos <span className="font-playfair italic text-gold">clients</span>
+              </h2>
+              <div className="mx-auto mt-4 flex items-center justify-center gap-3">
+                <StarRating rating={4.8} />
+                <span className="text-sm text-muted-foreground">sur la base de nos avis clients</span>
+              </div>
+            </div>
+          </FadeIn>
+          <div className="w-full overflow-hidden">
+            <motion.div className="flex w-[300vw]" style={{ x: testimonialsX }}>
+              {testimonials.map((t) => (
+                <div key={t.name} className="flex w-screen items-center justify-center px-6">
+                  <div className="flex w-full max-w-lg flex-col rounded-2xl border border-border bg-card p-8 shadow-sm">
+                    <Quote className="h-8 w-8 text-gold/40" />
+                    <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground italic">{`"${t.quote}"`}</p>
+                    <div className="mt-6 border-t border-border pt-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-semibold text-card-foreground">{t.name}</p>
+                          <p className="text-xs text-muted-foreground">{t.project}</p>
+                        </div>
+                        <StarRating rating={t.rating} className="scale-75 origin-right" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      {/* WhatsApp — single centred section, no scroll needed */}
+      <section className="bg-secondary px-6 py-20 md:py-28">
         <div className="mx-auto max-w-3xl text-center">
           <FadeIn>
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#25D366]/10">
@@ -415,7 +414,7 @@ export default function ParticulierPage() {
             </div>
           </FadeIn>
         </div>
-      </SectionWrapper>
+      </section>
 
       {/* FAQ */}
       <SectionWrapper>
@@ -451,54 +450,56 @@ export default function ParticulierPage() {
       </SectionWrapper>
 
       {/* Présentation & Histoire */}
-      <SectionWrapper variant="muted">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          <FadeIn>
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-wider text-gold">
-                {"Présentation & histoire"}
-              </p>
-              <h2 className="mt-3 text-balance text-3xl font-bold text-foreground md:text-4xl">
-                Une entreprise familiale à votre écoute
-              </h2>
-              <p className="mt-6 text-base leading-relaxed text-muted-foreground">
-                Depuis plus de 10 ans, Artigold accompagne les particuliers dans
-                leurs projets de rénovation en Île-de-France. Fondée sur des
-                valeurs familiales de confiance, de rigueur et de proximité,
-                notre entreprise a fait le choix d{"'"}un modèle simple : un
-                interlocuteur unique pour coordonner l{"'"}ensemble des corps de
-                métier.
-              </p>
-              <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-                Certifiée Qualibat et RGE, Artigold s{"'"}engage dans une
-                démarche de qualité et de responsabilité environnementale. Nous
-                privilégions les matériaux durables et accompagnons nos clients
-                dans l{"'"}obtention des aides à la rénovation énergétique.
-              </p>
-              <Link
-                href="/histoire?from=particulier"
-                className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-gold transition-colors hover:text-gold-dark"
-              >
-                Découvrir notre histoire complète
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </FadeIn>
-          <FadeIn delay={150}>
-            <div className="relative h-72 overflow-hidden rounded-2xl lg:h-80">
-              <Image
-                src="/images/team-artigold.jpg"
-                alt="L'équipe Artigold"
-                fill
-                className="object-cover"
-              />
-            </div>
-          </FadeIn>
+      <section className="bg-secondary px-6 py-20 md:py-28">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <FadeIn>
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-wider text-gold">
+                  {"Présentation & histoire"}
+                </p>
+                <h2 className="mt-3 text-balance text-3xl font-bold text-foreground md:text-4xl">
+                  Une entreprise familiale à votre écoute
+                </h2>
+                <p className="mt-6 text-base leading-relaxed text-muted-foreground">
+                  Depuis plus de 10 ans, Artigold accompagne les particuliers dans
+                  leurs projets de rénovation en Île-de-France. Fondée sur des
+                  valeurs familiales de confiance, de rigueur et de proximité,
+                  notre entreprise a fait le choix d{"'"}un modèle simple : un
+                  interlocuteur unique pour coordonner l{"'"}ensemble des corps de
+                  métier.
+                </p>
+                <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+                  Certifiée Qualibat et RGE, Artigold s{"'"}engage dans une
+                  démarche de qualité et de responsabilité environnementale. Nous
+                  privilégions les matériaux durables et accompagnons nos clients
+                  dans l{"'"}obtention des aides à la rénovation énergétique.
+                </p>
+                <Link
+                  href="/histoire?from=particulier"
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-gold transition-colors hover:text-gold-dark"
+                >
+                  Découvrir notre histoire complète
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </FadeIn>
+            <FadeIn delay={150}>
+              <div className="relative h-72 overflow-hidden rounded-2xl lg:h-80">
+                <Image
+                  src="/images/team-artigold.jpg"
+                  alt="L'équipe Artigold"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </FadeIn>
+          </div>
         </div>
-      </SectionWrapper>
+      </section>
 
       {/* CTA */}
-      <SectionWrapper>
+      <section className="bg-background px-6 py-20 md:py-28">
         <FadeIn>
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-balance text-3xl font-bold text-foreground md:text-4xl">
@@ -524,7 +525,8 @@ export default function ParticulierPage() {
             </div>
           </div>
         </FadeIn>
-      </SectionWrapper>
+      </section>
     </>
   )
 }
+
