@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { cn } from "@/lib/utils"
 
 interface LogoMarqueeProps {
@@ -19,41 +20,47 @@ const logosParticulier = [
 ]
 
 const logosProfessionnel = [
-  "Hyatt",
-  "Macif",
-  "L'Oréal",
-  "Attijariwafa Bank",
-  "Bouygues",
-  "Vinci",
-  "Nexity",
-  "Icade",
+  { src: "/images/trust/hyatt.webp", alt: "Hyatt" },
+  { src: "/images/trust/macif.webp", alt: "Macif" },
+  { src: "/images/trust/l'oreal.webp", alt: "L'Oréal" },
+  { src: "/images/trust/attijari.webp", alt: "Attijariwafa Bank" },
+  { src: "/images/trust/dps market.webp", alt: "DPS Market" },
+  { src: "/images/trust/uac.webp", alt: "UAC" },
 ]
 
 export function LogoMarquee({ className, variant = "dark" }: LogoMarqueeProps) {
   const logos = variant === "light" ? logosParticulier : logosProfessionnel
   const isDark = variant === "dark"
+  const isProfessional = variant === "dark"
 
   return (
     <div className={cn("overflow-hidden", className)}>
-      <div className="flex animate-marquee items-center gap-12">
-        {[...logos, ...logos].map((logo, i) => (
+      <div className="flex animate-marquee items-center gap-16">
+        {[...logos, ...logos, ...logos].map((logo, i) => (
           <div
-            key={`${logo}-${i}`}
+            key={`${typeof logo === "string" ? logo : logo.alt}-${i}`}
             className={cn(
-              "flex h-12 shrink-0 items-center justify-center rounded-lg border px-8",
-              isDark
-                ? "border-white/10 bg-white/5"
-                : "border-border bg-card shadow-sm",
+              "flex h-24 shrink-0 items-center justify-center rounded-lg px-8",
             )}
           >
-            <span
-              className={cn(
-                "whitespace-nowrap text-sm font-semibold tracking-wide",
-                isDark ? "text-white/60" : "text-muted-foreground",
-              )}
-            >
-              {logo}
-            </span>
+            {isProfessional && typeof logo === "object" ? (
+              <Image
+                src={logo.src}
+                alt={logo.alt}
+                width={150}
+                height={80}
+                className="h-16 w-auto object-contain"
+              />
+            ) : (
+              <span
+                className={cn(
+                  "whitespace-nowrap text-sm font-semibold tracking-wide",
+                  isDark ? "text-white/60" : "text-muted-foreground",
+                )}
+              >
+                {typeof logo === "string" ? logo : logo.alt}
+              </span>
+            )}
           </div>
         ))}
       </div>

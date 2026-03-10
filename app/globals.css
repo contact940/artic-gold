@@ -103,14 +103,15 @@
   }
 
   100% {
-    transform: translateX(-50%);
+    transform: translateX(calc(-100% / 3));
   }
 }
 
 .animate-marquee {
-  animation: marquee 30s linear infinite;
+  animation: marquee 40s linear infinite;
+  will-change: transform;
 }
 
 @theme inline {
-  --animate-marquee: marquee 30s linear infinite;
+  --animate-marquee: marquee 40s linear infinite;
 }

@@ -1,7 +1,4 @@
-"use client"
-
-import { useRef, Suspense } from "react"
-import { useSearchParams } from "next/navigation"
+import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import {
@@ -14,9 +11,15 @@ import {
   Leaf,
   Calendar,
 } from "lucide-react"
-import { motion, useScroll, useTransform } from "motion/react"
+import { SectionWrapper } from "@/components/section-wrapper"
 import { FadeIn } from "@/components/fade-in"
 // --- theme-aware page: receives ?from=particulier or ?from=professionnel ---
+
+export const metadata: Metadata = {
+  title: "Notre Histoire et Nos Valeurs | Artigold",
+  description:
+    "Découvrez l'histoire d'Artigold, entreprise de construction et rénovation tous corps d'état. Nos valeurs : qualité, transparence, efficacité et bien-être.",
+}
 
 const milestones = [
   {
@@ -85,35 +88,15 @@ const stats = [
   { value: "98%", label: "Clients satisfaits" },
 ]
 
-export default function HistoirePage() {
-  return (
-    <Suspense>
-      <HistoireContent />
-    </Suspense>
-  )
-}
-
-function HistoireContent() {
-  const searchParams = useSearchParams()
-  const from = searchParams.get("from")
+export default async function HistoirePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ from?: string }>
+}) {
+  const { from } = await searchParams
   const isDark = from === "professionnel"
   const backHref = isDark ? "/professionnel" : "/particulier"
   const backLabel = isDark ? "Retour aux Professionnels" : "Retour aux Particuliers"
-
-  const heroRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress: heroProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] })
-  const heroImageY = useTransform(heroProgress, [0, 1], ["0px", "80px"])
-  const heroBlur = useTransform(heroProgress, [0, 0.75], ["blur(0px)", "blur(18px)"])
-  const heroContentY = useTransform(heroProgress, [0, 1], ["0px", "-40px"])
-  const heroOpacity = useTransform(heroProgress, [0, 0.8], [1, 0])
-
-  const milestonesRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress: milestonesProgress } = useScroll({ target: milestonesRef, offset: ["start start", "end end"] })
-  const milestonesX = useTransform(milestonesProgress, [0, 1], ["0%", "-80%"])
-
-  const valuesRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress: valuesProgress } = useScroll({ target: valuesRef, offset: ["start start", "end end"] })
-  const valuesX = useTransform(valuesProgress, [0, 1], ["0%", "-75%"])
 
   // Theme tokens
   const t = {
@@ -142,24 +125,16 @@ function HistoireContent() {
   return (
     <div className={t.wrapper}>
       {/* Hero */}
-      <div ref={heroRef} className="relative flex min-h-[50vh] items-center overflow-hidden">
-        <motion.div
-          style={{ y: heroImageY, filter: heroBlur }}
-          className="absolute inset-0"
-        >
-          <Image
-            src="/images/hero-histoire.jpg"
-            alt="Bâtiment emblématique Artigold"
-            fill
-            className="object-cover"
-            priority
-          />
-        </motion.div>
+      <section className="relative flex min-h-[50vh] items-center overflow-hidden">
+        <Image
+          src="/images/hero-histoire.jpg"
+          alt="Bâtiment emblématique Artigold"
+          fill
+          className="object-cover"
+          priority
+        />
         <div className="absolute inset-0 bg-foreground/60" />
-        <motion.div
-          style={{ y: heroContentY, opacity: heroOpacity }}
-          className="relative z-10 px-6 py-20"
-        >
+        <div className="relative z-10 px-6 py-20">
           <div className="mx-auto max-w-7xl">
             <FadeIn>
               <Link
@@ -178,8 +153,8 @@ function HistoireContent() {
               </p>
             </FadeIn>
           </div>
-        </motion.div>
-      </div>
+        </div>
+      </section>
 
       {/* Stats Banner */}
       <section className={t.statsBanner}>
@@ -195,10 +170,10 @@ function HistoireContent() {
         </div>
       </section>
 
-      {/* Chronologie — horizontal scroll */}
-      <div ref={milestonesRef} className="relative h-[500vh]">
-        <div className={`sticky top-0 flex h-screen flex-col items-center justify-center gap-10 overflow-hidden py-16 ${isDark ? "bg-[#0d0d0d]" : "bg-secondary"}`}>
-          <div className="px-6 text-center">
+      {/* Chronologie */}
+      <SectionWrapper variant={t.sw1}>
+        <FadeIn>
+          <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-wider text-gold">
               Frise chronologique
             </p>
@@ -206,69 +181,74 @@ function HistoireContent() {
               Notre{" "}<span className="font-playfair italic text-gold">parcours</span>
             </h2>
           </div>
-          <div className="w-full overflow-hidden">
-            <motion.div
-              style={{ x: milestonesX }}
-              className="flex w-[500vw]"
-            >
-              {milestones.map((m) => (
-                <div key={m.year} className="flex w-screen shrink-0 items-center justify-center px-8">
-                  <div className={`flex w-full max-w-lg flex-col rounded-2xl border p-10 shadow-sm ${t.card}`}>
-                    <div className="flex items-center gap-3">
-                      <Calendar className="h-5 w-5 text-gold" />
-                      <span className="text-xl font-bold text-gold">{m.year}</span>
-                    </div>
-                    <h3 className={`mt-5 text-2xl font-bold ${t.cardHeading}`}>{m.title}</h3>
-                    <p className={`mt-4 text-base leading-relaxed ${t.cardText}`}>{m.description}</p>
+        </FadeIn>
+        <div className="relative mx-auto mt-14 max-w-3xl">
+          <div className={`absolute left-6 top-0 bottom-0 w-px md:left-1/2 md:-translate-x-px ${t.timelineLine}`} />
+          <div className="flex flex-col gap-12">
+            {milestones.map((m, i) => (
+              <FadeIn key={m.year} delay={i * 100}>
+                <div
+                  className={`relative flex flex-col gap-4 pl-16 md:w-1/2 ${i % 2 === 0 ? "md:pr-12 md:pl-0 md:text-right" : "md:ml-auto md:pl-12"
+                    }`}
+                >
+                  <div
+                    className={`absolute left-4 top-1 flex h-5 w-5 items-center justify-center rounded-full border-2 ${t.timelineDot} md:left-auto ${i % 2 === 0 ? "md:-right-2.5" : "md:-left-2.5"
+                      }`}
+                  >
+                    <div className="h-2 w-2 rounded-full bg-gold" />
                   </div>
+                  <div className={`flex items-center gap-2 ${i % 2 === 0 ? "md:justify-end" : ""}`}>
+                    <Calendar className={`h-4 w-4 text-gold ${i % 2 !== 0 ? "md:order-first" : ""}`} />
+                    <span className="text-sm font-bold text-gold">{m.year}</span>
+                  </div>
+                  <h3 className={`text-lg font-bold ${t.heading}`}>{m.title}</h3>
+                  <p className={`text-sm leading-relaxed ${t.body}`}>{m.description}</p>
                 </div>
-              ))}
-            </motion.div>
+              </FadeIn>
+            ))}
           </div>
         </div>
-      </div>
+      </SectionWrapper>
 
       {/* Mission */}
-      <section className={`px-6 py-20 md:py-28 ${isDark ? "bg-[#111111]" : "bg-background"}`}>
-        <div className="mx-auto max-w-7xl">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
-            <FadeIn>
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-wider text-gold">
-                  Notre philosophie
-                </p>
-                <h2 className={`mt-3 text-balance text-3xl font-bold md:text-4xl ${t.heading}`}>
-                  Notre{" "}<span className="font-playfair italic text-gold">vision</span>
-                </h2>
-                <p className={`mt-6 text-base leading-relaxed ${t.body}`}>
-                  Apporter de la <span className="font-bold">clarté</span> là où les travaux font peur. Nous démystifions le BTP et rendons chaque étape compréhensible.
-                </p>
-                <p className={`mt-6 text-base leading-relaxed ${t.body}`}>
-                  <span className="font-bold">Coordonner simplement</span> des métiers complexes. Électricien, plombier, maçon, peintre... nous orchestrons chaque intervention.
-                </p>
-                <p className={`mt-6 text-base leading-relaxed ${t.body}`}>
-                  Être un <span className="font-bold">partenaire de confiance</span> sur la durée. Nos clients reviennent et nous recommandent, c{"'"}est notre plus belle réussite.
-                </p>
-              </div>
-            </FadeIn>
-            <FadeIn delay={150}>
-              <div className="relative h-80 overflow-hidden rounded-2xl lg:h-96">
-                <Image
-                  src="/images/team-artigold.jpg"
-                  alt="Équipe Artigold sur un chantier"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </FadeIn>
-          </div>
+      <SectionWrapper variant={t.sw2}>
+        <div className="grid items-center gap-12 lg:grid-cols-2">
+          <FadeIn>
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wider text-gold">
+                Notre philosophie
+              </p>
+              <h2 className={`mt-3 text-balance text-3xl font-bold md:text-4xl ${t.heading}`}>
+                Notre{" "}<span className="font-playfair italic text-gold">vision</span>
+              </h2>
+              <p className={`mt-6 text-base leading-relaxed ${t.body}`}>
+                Apporter de la <span className="font-bold">clarté</span> là où les travaux font peur. Nous démystifions le BTP et rendons chaque étape compréhensible.
+              </p>
+              <p className={`mt-6 text-base leading-relaxed ${t.body}`}>
+                <span className="font-bold">Coordonner simplement</span> des métiers complexes. Électricien, plombier, maçon, peintre... nous orchestrons chaque intervention.
+              </p>
+              <p className={`mt-6 text-base leading-relaxed ${t.body}`}>
+                Être un <span className="font-bold">partenaire de confiance</span> sur la durée. Nos clients reviennent et nous recommandent, c{"'"}est notre plus belle réussite.
+              </p>
+            </div>
+          </FadeIn>
+          <FadeIn delay={150}>
+            <div className="relative h-80 overflow-hidden rounded-2xl lg:h-96">
+              <Image
+                src="/images/team-artigold.jpg"
+                alt="Équipe Artigold sur un chantier"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </FadeIn>
         </div>
-      </section>
+      </SectionWrapper>
 
-      {/* Values — horizontal scroll */}
-      <div ref={valuesRef} className="relative h-[400vh]">
-        <div className={`sticky top-0 flex h-screen flex-col items-center justify-center gap-10 overflow-hidden py-16 ${isDark ? "bg-[#0d0d0d]" : "bg-secondary"}`}>
-          <div className="px-6 text-center">
+      {/* Values */}
+      <SectionWrapper variant={t.sw2}>
+        <FadeIn>
+          <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-wider text-gold">
               Ce qui nous guide
             </p>
@@ -276,29 +256,24 @@ function HistoireContent() {
               Nos{" "}<span className="font-playfair italic text-gold">valeurs</span>
             </h2>
           </div>
-          <div className="w-full overflow-hidden">
-            <motion.div
-              style={{ x: valuesX }}
-              className="flex w-[400vw]"
-            >
-              {values.map((v) => (
-                <div key={v.title} className="flex w-screen shrink-0 items-center justify-center px-8">
-                  <div className={`flex w-full max-w-lg flex-col rounded-2xl border p-10 shadow-sm transition-all ${t.card}`}>
-                    <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gold/10">
-                      <v.icon className="h-7 w-7 text-gold" />
-                    </div>
-                    <h3 className={`mt-6 text-2xl font-bold ${t.cardHeading}`}>{v.title}</h3>
-                    <p className={`mt-4 text-base leading-relaxed ${t.cardText}`}>{v.description}</p>
-                  </div>
+        </FadeIn>
+        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {values.map((v, i) => (
+            <FadeIn key={v.title} delay={i * 100}>
+              <div className={`flex h-full flex-col rounded-2xl border p-6 shadow-sm transition-all ${t.card}`}>
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10">
+                  <v.icon className="h-6 w-6 text-gold" />
                 </div>
-              ))}
-            </motion.div>
-          </div>
+                <h3 className={`mt-5 text-lg font-bold ${t.cardHeading}`}>{v.title}</h3>
+                <p className={`mt-2 text-sm leading-relaxed ${t.cardText}`}>{v.description}</p>
+              </div>
+            </FadeIn>
+          ))}
         </div>
-      </div>
+      </SectionWrapper>
 
       {/* RSE */}
-      <section className={`px-6 py-20 md:py-28 ${isDark ? "bg-[#111111]" : "bg-background"}`}>
+      <SectionWrapper variant={t.sw3}>
         <div className="mx-auto max-w-3xl text-center">
           <FadeIn>
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-gold/10">
@@ -343,10 +318,10 @@ function HistoireContent() {
             </div>
           </FadeIn>
         </div>
-      </section>
+      </SectionWrapper>
 
       {/* CTA */}
-      <section className={`px-6 py-20 md:py-28 ${isDark ? "bg-[#0d0d0d]" : "bg-secondary"}`}>
+      <SectionWrapper variant={t.sw2}>
         <FadeIn>
           <div className="mx-auto max-w-2xl text-center">
             <h2 className={`text-balance text-3xl font-bold md:text-4xl ${t.heading}`}>
@@ -361,7 +336,7 @@ function HistoireContent() {
             </Link>
           </div>
         </FadeIn>
-      </section>
+      </SectionWrapper>
     </div>
   )
 }
