@@ -387,7 +387,7 @@ export default async function HistoirePage({
       <section
         className={`relative overflow-hidden px-6 py-24 md:py-32 ${t.ctaBg}`}
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gold/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-gold/5 via-transparent to-transparent" />
         <div className="relative mx-auto max-w-2xl text-center">
           <FadeIn>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">

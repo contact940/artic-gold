@@ -58,7 +58,7 @@ export default function LandingPage() {
         <FadeIn delay={600} direction="none" className="absolute bottom-8 left-1/2 -translate-x-1/2">
           <div className="flex flex-col items-center gap-2">
             <span className="text-xs font-medium uppercase tracking-widest text-white/40">Défiler</span>
-            <div className="h-12 w-[1px] bg-linear-to-b from-white/40 to-transparent" />
+            <div className="h-12 w-px bg-linear-to-b from-white/40 to-transparent" />
           </div>
         </FadeIn>
       </section>
@@ -149,12 +149,12 @@ export default function LandingPage() {
 
         <FadeIn delay={300}>
           <div className="mt-16 flex items-center justify-center gap-3">
-            <div className="h-[1px] w-12 bg-gold/30" />
+            <div className="h-px w-12 bg-gold/30" />
             <p className="text-center text-sm text-muted-foreground">
               <span className="font-semibold text-foreground">Artigold</span>
               {" "}— de la conception à la réception de vos travaux
             </p>
-            <div className="h-[1px] w-12 bg-gold/30" />
+            <div className="h-px w-12 bg-gold/30" />
           </div>
         </FadeIn>
       </SectionWrapper>
