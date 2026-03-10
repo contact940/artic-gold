@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Phone, Mail, MapPin } from "lucide-react"
+import { Phone, Mail, MapPin, ArrowUpRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 
@@ -13,91 +13,84 @@ export function SiteFooter() {
   return (
     <footer
       className={cn(
-        "border-t",
+        "relative",
         isDark
-          ? "border-white/10 bg-[#0d0d0d] text-white"
-          : "border-border bg-secondary",
+          ? "bg-[#0a0a0a] text-white"
+          : "bg-[#1a1a1a] text-white",
       )}
     >
-      <div className="mx-auto max-w-7xl px-6 py-16">
+      {/* Gold divider on top */}
+      <div className="section-divider" />
+
+      <div className="mx-auto max-w-7xl px-6 pt-20 pb-10">
+        {/* Top section: Large CTA */}
+        <div className="mb-20 flex flex-col items-center text-center">
+          <p className="text-sm font-semibold uppercase tracking-widest text-gold">
+            Prêt à démarrer ?
+          </p>
+          <h2 className="mt-4 max-w-2xl text-balance text-3xl font-bold tracking-tight md:text-4xl">
+            Parlons de votre{" "}
+            <span className="font-playfair italic text-gold">projet</span>
+          </h2>
+          <Link
+            href="/contact"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-gold px-8 py-4 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:bg-gold-dark hover:shadow-lg hover:shadow-gold/20"
+          >
+            Demander un devis gratuit
+            <ArrowUpRight className="h-4 w-4" />
+          </Link>
+        </div>
+
+        {/* Separator */}
+        <div className="mb-16 border-t border-white/10" />
+
+        {/* Main footer grid */}
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
-          <div className="flex flex-col gap-4">
-            <Link
-              href="/"
-              className={cn(
-                "text-2xl font-bold tracking-tight",
-                isDark ? "text-white" : "text-foreground",
-              )}
-            >
-              <div>
-                <Image
-                  src="/logo artic.webp"
-                  alt="Artigold"
-                  width={120}
-                  height={100}
-                  className="rounded-full"
-                />
-
-              </div>
+          <div className="flex flex-col gap-5">
+            <Link href="/" className="inline-block">
+              <Image
+                src="/logo artic.webp"
+                alt="Artigold"
+                width={100}
+                height={80}
+                className="rounded-full opacity-90 transition-opacity hover:opacity-100"
+              />
             </Link>
-            <p
-              className={cn(
-                "text-sm leading-relaxed",
-                isDark ? "text-white/50" : "text-muted-foreground",
-              )}
-            >
+            <p className="text-sm leading-relaxed text-white/50">
               Entreprise tous corps d{"'"}état, Artigold vous accompagne de la
               conception à la réception de vos travaux.
             </p>
           </div>
 
           {/* Navigation */}
-          <div className="flex flex-col gap-4">
-            <h3
-              className={cn(
-                "text-sm font-semibold uppercase tracking-wider",
-                isDark ? "text-white" : "text-foreground",
-              )}
-            >
+          <div className="flex flex-col gap-5">
+            <h3 className="text-xs font-semibold uppercase tracking-widest text-white/40">
               Navigation
             </h3>
-            <nav
-              className="flex flex-col gap-3"
-              aria-label="Navigation footer"
-            >
+            <nav className="flex flex-col gap-3" aria-label="Navigation footer">
               {[
                 { href: "/", label: "Accueil" },
                 { href: "/particulier", label: "Particuliers" },
                 { href: "/professionnel", label: "Professionnels" },
                 { href: "/histoire", label: "Histoire" },
-                // { href: "/blog", label: "Blog" },
                 { href: "/contact", label: "Contact" },
               ].map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={cn(
-                    "text-sm transition-colors",
-                    isDark
-                      ? "text-white/50 hover:text-white"
-                      : "text-muted-foreground hover:text-foreground",
-                  )}
+                  className="group flex items-center gap-1 text-sm text-white/50 transition-colors hover:text-gold"
                 >
                   {link.label}
+                  <ArrowUpRight className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100" />
                 </Link>
               ))}
             </nav>
           </div>
 
           {/* Services */}
-          <div className="flex flex-col gap-4">
-            <h3
-              className={cn(
-                "text-sm font-semibold uppercase tracking-wider",
-                isDark ? "text-white" : "text-foreground",
-              )}
-            >
+          <div className="flex flex-col gap-5">
+            <h3 className="text-xs font-semibold uppercase tracking-widest text-white/40">
               Services
             </h3>
             <nav className="flex flex-col gap-3" aria-label="Services footer">
@@ -110,82 +103,58 @@ export function SiteFooter() {
                 <Link
                   key={`${link.href}-${i}`}
                   href={link.href}
-                  className={cn(
-                    "text-sm transition-colors",
-                    isDark
-                      ? "text-white/50 hover:text-white"
-                      : "text-muted-foreground hover:text-foreground",
-                  )}
+                  className="group flex items-center gap-1 text-sm text-white/50 transition-colors hover:text-gold"
                 >
                   {link.label}
+                  <ArrowUpRight className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100" />
                 </Link>
               ))}
             </nav>
           </div>
 
           {/* Contact */}
-          <div className="flex flex-col gap-4">
-            <h3
-              className={cn(
-                "text-sm font-semibold uppercase tracking-wider",
-                isDark ? "text-white" : "text-foreground",
-              )}
-            >
+          <div className="flex flex-col gap-5">
+            <h3 className="text-xs font-semibold uppercase tracking-widest text-white/40">
               Contact
             </h3>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-4">
               <a
                 href="tel:+33123456789"
-                className={cn(
-                  "flex items-center gap-2 text-sm transition-colors",
-                  isDark
-                    ? "text-white/50 hover:text-white"
-                    : "text-muted-foreground hover:text-foreground",
-                )}
+                className="group flex items-center gap-3 text-sm text-white/50 transition-colors hover:text-white"
               >
-                <Phone className="h-4 w-4 text-gold" />
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/5 transition-colors group-hover:bg-gold/10">
+                  <Phone className="h-4 w-4 text-gold" />
+                </div>
                 01 23 45 67 89
               </a>
               <a
                 href="mailto:contact@artigold.fr"
-                className={cn(
-                  "flex items-center gap-2 text-sm transition-colors",
-                  isDark
-                    ? "text-white/50 hover:text-white"
-                    : "text-muted-foreground hover:text-foreground",
-                )}
+                className="group flex items-center gap-3 text-sm text-white/50 transition-colors hover:text-white"
               >
-                <Mail className="h-4 w-4 text-gold" />
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/5 transition-colors group-hover:bg-gold/10">
+                  <Mail className="h-4 w-4 text-gold" />
+                </div>
                 contact@artigold.fr
               </a>
-              <span
-                className={cn(
-                  "flex items-center gap-2 text-sm",
-                  isDark ? "text-white/50" : "text-muted-foreground",
-                )}
-              >
-                <MapPin className="h-4 w-4 text-gold" />
-                Paris & Ile-de-France
+              <span className="flex items-center gap-3 text-sm text-white/50">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/5">
+                  <MapPin className="h-4 w-4 text-gold" />
+                </div>
+                Paris & Île-de-France
               </span>
             </div>
           </div>
         </div>
 
-        <div
-          className={cn(
-            "mt-12 border-t pt-8",
-            isDark ? "border-white/10" : "border-border",
-          )}
-        >
-          <p
-            className={cn(
-              "text-center text-xs",
-              isDark ? "text-white/30" : "text-muted-foreground",
-            )}
-          >
-            {"\u00A9"} {new Date().getFullYear()} Artigold. Tous droits
-            réservés.
+        {/* Bottom bar */}
+        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row">
+          <p className="text-xs text-white/30">
+            {"\u00A9"} {new Date().getFullYear()} Artigold. Tous droits réservés.
           </p>
+          <div className="flex items-center gap-6 text-xs text-white/30">
+            <span>Mentions légales</span>
+            <span>Politique de confidentialité</span>
+          </div>
         </div>
       </div>
     </footer>

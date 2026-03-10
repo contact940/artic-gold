@@ -3,7 +3,8 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState, useEffect } from "react"
-import { Menu, X, Phone } from "lucide-react"
+import { Menu, X, Phone, ArrowRight } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 
@@ -20,8 +21,7 @@ export function SiteHeader() {
   const [fromParam, setFromParam] = useState<string | null>(null)
   const pathname = usePathname()
   const isDark = pathname === "/professionnel" || (pathname === "/histoire" && fromParam === "professionnel")
-  // Pages that start with a full-screen hero — all other pages use solid header
-  const hasHero = ["/", "/particulier", "/professionnel", "/histoire"].some(p => pathname === p || pathname.startsWith(p + "?"))
+  const hasHero = ["/", "/particulier", "/professionnel", "/histoire", "/contact"].some(p => pathname === p || pathname.startsWith(p + "?"))
 
   useEffect(() => {
     setFromParam(new URLSearchParams(window.location.search).get("from"))
@@ -35,10 +35,8 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll)
   }, [pathname])
 
-  // Reset mobile menu on route change
   useEffect(() => { setMobileOpen(false) }, [pathname])
 
-  // hide the other section link when on a specific page, and inject Histoire link
   const filteredNavLinks = (() => {
     let links = navLinks.filter((link) => {
       if (pathname.startsWith("/particulier")) return link.href !== "/professionnel"
@@ -64,22 +62,28 @@ export function SiteHeader() {
   })()
 
   return (
-    <header
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         scrolled
           ? isDark
-            ? "bg-[#111111]/95 backdrop-blur-sm shadow-sm"
-            : "bg-background/95 backdrop-blur-sm shadow-sm border-b border-border"
+            ? "bg-[#111111]/90 backdrop-blur-xl shadow-lg shadow-black/10"
+            : "bg-white/80 backdrop-blur-xl shadow-lg shadow-black/5 border-b border-border/50"
           : isDark
-            ? "bg-linear-to-b from-gray-900 to-transparent"
-            : "bg-transparent",
+            ? "bg-linear-to-b from-black/50 to-transparent"
+            : "bg-linear-to-b from-black/30 to-transparent",
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <div>
+        <Link href="/" className="relative flex items-center gap-2">
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 400 }}
+          >
             <Image
               src="/logo artic.webp"
               alt="Artigold"
@@ -87,13 +91,12 @@ export function SiteHeader() {
               height={100}
               className="rounded-full"
             />
-
-          </div>
+          </motion.div>
         </Link>
 
         {/* Desktop Nav */}
         <nav
-          className="hidden items-center gap-8 md:flex"
+          className="hidden items-center gap-1 md:flex"
           aria-label="Navigation principale"
         >
           {filteredNavLinks.map((link) => (
@@ -101,30 +104,42 @@ export function SiteHeader() {
               key={link.href}
               href={link.href}
               className={cn(
-                "text-sm font-medium transition-colors",
+                "relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300",
                 pathname === link.href
-                  ? scrolled || isDark ? "text-gold" : "text-gold underline-offset-4"
+                  ? scrolled
+                    ? isDark ? "text-gold" : "text-gold"
+                    : "text-gold"
                   : isDark
-                    ? "text-white hover:text-gold"
+                    ? "text-white/80 hover:text-white"
                     : scrolled
-                      ? "text-foreground hover:text-gold"
-                      : "text-white hover:text-gold",
+                      ? "text-foreground/70 hover:text-foreground"
+                      : "text-white/80 hover:text-white",
               )}
             >
               {link.label}
+              {pathname === link.href && (
+                <motion.div
+                  layoutId="navbar-indicator"
+                  className="absolute inset-0 rounded-full bg-gold/10"
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                />
+              )}
             </Link>
           ))}
           <Link
             href="/contact"
             className={cn(
-              "inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors",
+              "ml-4 inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold transition-all duration-300",
               !scrolled && !isDark
-                ? "bg-white text-gold hover:bg-white/90"
-                : "bg-gold text-primary-foreground hover:bg-gold-dark",
+                ? "bg-white/15 text-white backdrop-blur-sm hover:bg-white/25 border border-white/20"
+                : isDark
+                  ? "bg-gold text-primary-foreground hover:bg-gold-dark shadow-lg shadow-gold/20"
+                  : "bg-gold text-primary-foreground hover:bg-gold-dark shadow-lg shadow-gold/20",
             )}
           >
-            <Phone className="h-4 w-4" />
-            Nous contacter
+            <Phone className="h-3.5 w-3.5" />
+            Devis gratuit
+            <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </nav>
 
@@ -132,12 +147,12 @@ export function SiteHeader() {
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className={cn(
-            "inline-flex items-center justify-center rounded-md p-2 md:hidden",
+            "inline-flex items-center justify-center rounded-full p-2.5 md:hidden transition-colors",
             isDark
-              ? "text-white"
+              ? "text-white hover:bg-white/10"
               : scrolled
-                ? "text-foreground"
-                : "text-white",
+                ? "text-foreground hover:bg-foreground/5"
+                : "text-white hover:bg-white/10",
           )}
           aria-label={mobileOpen ? "Fermer le menu" : "Ouvrir le menu"}
         >
@@ -150,45 +165,65 @@ export function SiteHeader() {
       </div>
 
       {/* Mobile Nav */}
-      {mobileOpen && (
-        <nav
-          className={cn(
-            "border-t px-6 pb-6 pt-4 md:hidden",
-            isDark
-              ? "border-white/10 bg-[#111111]"
-              : "border-border bg-background",
-          )}
-          aria-label="Navigation mobile"
-        >
-          <div className="flex flex-col gap-4">
-            {filteredNavLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className={cn(
-                  "text-base font-medium transition-colors",
-                  pathname === link.href
-                    ? "text-gold"
-                    : isDark
-                      ? "text-white hover:text-gold"
-                      : "text-foreground hover:text-gold",
-                )}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.nav
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className={cn(
+              "overflow-hidden border-t md:hidden",
+              isDark
+                ? "border-white/10 bg-[#111111]/60 backdrop-blur-2xl"
+                : "border-border/50 bg-white/60 backdrop-blur-2xl",
+            )}
+            aria-label="Navigation mobile"
+          >
+            <div className="flex flex-col gap-1 px-6 pb-6 pt-4">
+              {filteredNavLinks.map((link, i) => (
+                <motion.div
+                  key={link.href}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                >
+                  <Link
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={cn(
+                      "block rounded-xl px-4 py-3 text-base font-medium transition-colors",
+                      pathname === link.href
+                        ? isDark
+                          ? "bg-gold/10 text-gold"
+                          : "bg-gold/10 text-gold"
+                        : isDark
+                          ? "text-white hover:bg-white/5 hover:text-gold"
+                          : "text-foreground hover:bg-secondary hover:text-gold",
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
+              ))}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: filteredNavLinks.length * 0.05 }}
               >
-                {link.label}
-              </Link>
-            ))}
-            <Link
-              href="/contact"
-              onClick={() => setMobileOpen(false)}
-              className="mt-2 inline-flex items-center justify-center gap-2 rounded-lg bg-gold px-5 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-gold-dark"
-            >
-              <Phone className="h-4 w-4" />
-              Nous contacter
-            </Link>
-          </div>
-        </nav>
-      )}
-    </header>
+                <Link
+                  href="/contact"
+                  onClick={() => setMobileOpen(false)}
+                  className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-5 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-gold-dark"
+                >
+                  <Phone className="h-4 w-4" />
+                  Devis gratuit
+                </Link>
+              </motion.div>
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
+    </motion.header>
   )
 }

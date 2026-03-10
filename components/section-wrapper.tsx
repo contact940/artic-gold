@@ -17,7 +17,8 @@ export function SectionWrapper({
     <section
       id={id}
       className={cn(
-        "px-6 py-20 md:py-28",
+        "relative px-6 py-24 md:py-32",
+        variant === "default" && "bg-background",
         variant === "muted" && "bg-secondary",
         variant === "dark" && "bg-[#1a1a1a] text-white",
         variant === "dark-muted" && "bg-[#111111] text-white",
