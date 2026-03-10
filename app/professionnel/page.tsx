@@ -342,7 +342,7 @@ export default function ProfessionnelPage() {
         <FadeIn>
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">
-              {"\u00c9tudes de cas"}
+              {"études de cas"}
             </p>
             <h2 className="mt-4 text-balance text-3xl font-bold text-white md:text-4xl">
               Avant /{" "}
@@ -372,8 +372,8 @@ export default function ProfessionnelPage() {
                 "Mise en conformit\u00e9 totale : rampes, sanitaires adapt\u00e9s, alarmes incendie, balisage",
               figures: [
                 { label: "Surface", value: "1 400 m\u00b2" },
-                { label: "Dur\u00e9e", value: "10 semaines" },
-                { label: "Conformit\u00e9", value: "100%" },
+                { label: "Durée", value: "10 semaines" },
+                { label: "Conformité", value: "100%" },
               ],
             },
           ].map((cs, i) => (
@@ -391,7 +391,7 @@ export default function ProfessionnelPage() {
                   </div>
                   <div className="rounded-xl border border-gold/20 bg-gold/5 p-5">
                     <p className="text-xs font-semibold uppercase tracking-[0.15em] text-gold">
-                      Apr\u00e8s
+                      Après
                     </p>
                     <p className="mt-2 text-sm leading-relaxed text-white/70">
                       {cs.after}
