@@ -1350,15 +1350,6 @@ fraction.js@^5.3.4:
   resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-5.3.4.tgz#8c0fcc6a9908262df4ed197427bdeef563e0699a"
   integrity sha512-1X1NTtiJphryn/uLQz3whtY6jK3fTqoE3ohKs0tT+Ujr1W59oopxmoEh7Lu5p6vBaPbgoM0bzveAW4Qi5RyWDQ==
 
-framer-motion@^12.35.1:
-  version "12.35.1"
-  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-12.35.1.tgz#42fe6cb8c309ec651ece54ff9a47e49a80d10006"
-  integrity sha512-rL8cLrjYZNShZqKV3U0Qj6Y5WDiZXYEM5giiTLfEqsIZxtspzMDCkKmrO5po76jWfvOg04+Vk+sfBvTD0iMmLw==
-  dependencies:
-    motion-dom "^12.35.1"
-    motion-utils "^12.29.2"
-    tslib "^2.4.0"
-
 framer-motion@^12.35.2:
   version "12.35.2"
   resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-12.35.2.tgz#add40fe8cdb8eb553feb9dd17525c93b51e6f67c"
@@ -1496,13 +1487,6 @@ magic-string@^0.30.21:
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.5.5"
 
-motion-dom@^12.35.1:
-  version "12.35.1"
-  resolved "https://registry.yarnpkg.com/motion-dom/-/motion-dom-12.35.1.tgz#62e4d0fd7998ebc3a0a648f2eb551850154939fa"
-  integrity sha512-7n6r7TtNOsH2UFSAXzTkfzOeO5616v9B178qBIjmu/WgEyJK0uqwytCEhwKBTuM/HJA40ptAw7hLFpxtPAMRZQ==
-  dependencies:
-    motion-utils "^12.29.2"
-
 motion-dom@^12.35.2:
   version "12.35.2"
   resolved "https://registry.yarnpkg.com/motion-dom/-/motion-dom-12.35.2.tgz#489b9eb7206dbac3d6087aae584f08e78c16cfbd"
@@ -1514,14 +1498,6 @@ motion-utils@^12.29.2:
   version "12.29.2"
   resolved "https://registry.yarnpkg.com/motion-utils/-/motion-utils-12.29.2.tgz#8fdd28babe042c2456b078ab33b32daa3bf5938b"
   integrity sha512-G3kc34H2cX2gI63RqU+cZq+zWRRPSsNIOjpdl9TN4AQwC4sgwYPl/Q/Obf/d53nOm569T0fYK+tcoSV50BWx8A==
-
-motion@^12.35.1:
-  version "12.35.1"
-  resolved "https://registry.yarnpkg.com/motion/-/motion-12.35.1.tgz#39a17abeab1920734f2a666be4999c849fc753e2"
-  integrity sha512-yEt/49kWC0VU/IEduDfeZw82eDemlPwa1cyo/gcEEUCN4WgpSJpUcxz6BUwakGabvJiTzLQ58J73515I5tfykQ==
-  dependencies:
-    framer-motion "^12.35.1"
-    tslib "^2.4.0"
 
 nanoid@^3.3.11, nanoid@^3.3.6:
   version "3.3.11"

@@ -1,7 +1,6 @@
 "use client"
 
-import { useRef } from "react"
-import { motion, useInView } from "framer-motion"
+import { useRef, useState, useEffect, useCallback } from "react"
 import { cn } from "@/lib/utils"
 
 interface FadeInProps {
@@ -13,103 +12,159 @@ interface FadeInProps {
   once?: boolean
 }
 
+// Fires when ≥15% of the element is inside the viewport AND it's at least
+// 80px from the bottom edge — so the user already sees the element before
+// the animation begins.
+const OBSERVER_OPTIONS: IntersectionObserverInit = {
+  rootMargin: "0px 0px -80px 0px",
+  threshold: 0.15,
+}
+
+const initialTransform: Record<NonNullable<FadeInProps["direction"]>, string> = {
+  up: "translateY(24px)",
+  down: "translateY(-24px)",
+  left: "translateX(24px)",
+  right: "translateX(-24px)",
+  none: "translateY(0px)",
+}
+
 export function FadeIn({
   children,
   className,
   delay = 0,
   direction = "up",
-  duration = 0.6,
+  duration = 0.55,
   once = true,
 }: FadeInProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once, margin: "-50px" })
+  const [visible, setVisible] = useState(false)
 
-  const directionOffset = {
-    up: { y: 40 },
-    down: { y: -40 },
-    left: { x: 40 },
-    right: { x: -40 },
-    none: {},
-  }
+  const handleIntersect = useCallback(
+    (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+      const [entry] = entries
+      if (entry.isIntersecting) {
+        setVisible(true)
+        if (once) observer.unobserve(entry.target)
+      } else if (!once) {
+        setVisible(false)
+      }
+    },
+    [once],
+  )
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(handleIntersect, OBSERVER_OPTIONS)
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [handleIntersect])
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      initial={{ opacity: 0, ...directionOffset[direction] }}
-      animate={isInView ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, ...directionOffset[direction] }}
-      transition={{
-        duration,
-        delay: delay / 1000,
-        ease: [0.21, 0.47, 0.32, 0.98],
-      }}
       className={cn(className)}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0px) translateX(0px)" : initialTransform[direction],
+        // transition only touches compositor-only properties (opacity + transform)
+        // so it never triggers layout or paint — pure GPU work
+        transition: `opacity ${duration}s cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms, transform ${duration}s cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`,
+        willChange: visible ? "auto" : "transform, opacity",
+      }}
     >
       {children}
-    </motion.div>
+    </div>
   )
 }
 
-// Stagger container for child animations
+// ---------------------------------------------------------------------------
+// Stagger helpers — driven by the same CSS approach, no JS per-frame
+// ---------------------------------------------------------------------------
+
 export function StaggerContainer({
   children,
   className,
-  staggerDelay = 0.1,
+  staggerDelay = 100,
 }: {
   children: React.ReactNode
   className?: string
+  /** ms between each child's delay */
   staggerDelay?: number
 }) {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: "-50px" })
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(([entry], obs) => {
+      if (entry.isIntersecting) {
+        setVisible(true)
+        obs.unobserve(entry.target)
+      }
+    }, OBSERVER_OPTIONS)
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-      variants={{
-        hidden: {},
-        visible: {
-          transition: {
-            staggerChildren: staggerDelay,
-          },
-        },
-      }}
+      // Pass visibility down via CSS custom property so children can read it
+      data-visible={visible ? "true" : undefined}
       className={cn(className)}
+      style={{ "--stagger-delay": `${staggerDelay}ms` } as React.CSSProperties}
     >
       {children}
-    </motion.div>
+    </div>
   )
 }
 
 export function StaggerItem({
   children,
   className,
+  index = 0,
 }: {
   children: React.ReactNode
   className?: string
+  index?: number
 }) {
+  // Uses the parent's data-visible via a CSS sibling trick isn't possible,
+  // so we keep a tiny observer per item but with a shared options object
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(([entry], obs) => {
+      if (entry.isIntersecting) {
+        setVisible(true)
+        obs.unobserve(entry.target)
+      }
+    }, OBSERVER_OPTIONS)
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <motion.div
-      variants={{
-        hidden: { opacity: 0, y: 30 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          transition: {
-            duration: 0.5,
-            ease: [0.21, 0.47, 0.32, 0.98],
-          },
-        },
-      }}
+    <div
+      ref={ref}
       className={cn(className)}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0px)" : "translateY(24px)",
+        transition: `opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${index * 80}ms, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${index * 80}ms`,
+        willChange: visible ? "auto" : "transform, opacity",
+      }}
     >
       {children}
-    </motion.div>
+    </div>
   )
 }
 
-// Counter animation for stats
+// Counter animation for stats — pure RAF, no JS per-frame via framer-motion
 export function AnimatedCounter({
   value,
   className,
@@ -122,47 +177,41 @@ export function AnimatedCounter({
   prefix?: string
 }) {
   const ref = useRef<HTMLSpanElement>(null)
-  const isInView = useInView(ref, { once: true })
+  const [visible, setVisible] = useState(false)
+  const [display, setDisplay] = useState(0)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(([entry], obs) => {
+      if (entry.isIntersecting) {
+        setVisible(true)
+        obs.unobserve(entry.target)
+      }
+    }, OBSERVER_OPTIONS)
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!visible) return
+    const duration = 1400
+    const start = performance.now()
+    let raf: number
+    const tick = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1)
+      // ease-out quad
+      const eased = 1 - (1 - progress) * (1 - progress)
+      setDisplay(Math.round(eased * value))
+      if (progress < 1) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [visible, value])
 
   return (
-    <motion.span
-      ref={ref}
-      className={cn(className)}
-      initial={{ opacity: 0 }}
-      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-    >
-      {prefix}
-      {isInView && (
-        <motion.span
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          <CountUp target={value} />
-        </motion.span>
-      )}
-      {suffix}
-    </motion.span>
-  )
-}
-
-function CountUp({ target }: { target: number }) {
-  const ref = useRef<HTMLSpanElement>(null)
-
-  return (
-    <motion.span
-      ref={ref}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 1.5, ease: "easeOut" }}
-      onUpdate={(latest) => {
-        if (ref.current) {
-          ref.current.textContent = Math.round(latest as unknown as number).toString()
-        }
-      }}
-    >
-      <span ref={ref}>0</span>
-    </motion.span>
+    <span ref={ref} className={cn(className)}>
+      {prefix}{display}{suffix}
+    </span>
   )
 }
