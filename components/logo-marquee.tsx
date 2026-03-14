@@ -49,7 +49,7 @@ export function LogoMarquee({ className, variant = "dark" }: LogoMarqueeProps) {
                 alt={logo.alt}
                 width={150}
                 height={80}
-                className="h-16 w-auto object-contain"
+                className="h-20 w-auto object-contain"
               />
             ) : (
               <span
