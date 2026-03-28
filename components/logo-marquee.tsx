@@ -36,7 +36,7 @@ export function LogoMarquee({ className, variant = "dark" }: LogoMarqueeProps) {
   return (
     <div className={cn("overflow-hidden", className)}>
       <div className="flex animate-marquee items-center gap-16">
-        {[...logos, ...logos, ...logos].map((logo, i) => (
+        {[...logos, ...logos].map((logo, i) => (
           <div
             key={`${typeof logo === "string" ? logo : logo.alt}-${i}`}
             className={cn(

@@ -4,7 +4,6 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState, useEffect } from "react"
 import { Menu, X, Phone, ArrowRight } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 
@@ -62,12 +61,9 @@ export function SiteHeader() {
   })()
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
+    <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 animate-header-slide-in",
         scrolled
           ? isDark
             ? "bg-[#111111]/90 backdrop-blur-xl shadow-lg shadow-black/10"
@@ -80,10 +76,7 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         {/* Logo */}
         <Link href="/" className="relative flex items-center gap-2">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 400 }}
-          >
+          <div className="transition-transform duration-200 hover:scale-105">
             <Image
               src="/logo artic.webp"
               alt="Artigold"
@@ -91,7 +84,7 @@ export function SiteHeader() {
               height={100}
               className="rounded-full"
             />
-          </motion.div>
+          </div>
         </Link>
 
         {/* Desktop Nav */}
@@ -118,10 +111,8 @@ export function SiteHeader() {
             >
               {link.label}
               {pathname === link.href && (
-                <motion.div
-                  layoutId="navbar-indicator"
-                  className="absolute inset-0 rounded-full bg-gold/10"
-                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                <span
+                  className="absolute inset-0 rounded-full bg-gold/10 transition-opacity duration-200"
                 />
               )}
             </Link>
@@ -165,65 +156,58 @@ export function SiteHeader() {
       </div>
 
       {/* Mobile Nav */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.nav
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className={cn(
-              "overflow-hidden border-t md:hidden",
-              isDark
-                ? "border-white/10 bg-[#111111]/60 backdrop-blur-2xl"
-                : "border-border/50 bg-white/60 backdrop-blur-2xl",
-            )}
-            aria-label="Navigation mobile"
-          >
-            <div className="flex flex-col gap-1 px-6 pb-6 pt-4">
-              {filteredNavLinks.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={() => setMobileOpen(false)}
-                    className={cn(
-                      "block rounded-xl px-4 py-3 text-base font-medium transition-colors",
-                      pathname === link.href
-                        ? isDark
-                          ? "bg-gold/10 text-gold"
-                          : "bg-gold/10 text-gold"
-                        : isDark
-                          ? "text-white hover:bg-white/5 hover:text-gold"
-                          : "text-foreground hover:bg-secondary hover:text-gold",
-                    )}
-                  >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: filteredNavLinks.length * 0.05 }}
+      <nav
+        className={cn(
+          "grid overflow-hidden border-t md:hidden transition-[grid-template-rows] duration-300 ease-in-out",
+          isDark
+            ? "border-white/10 bg-[#111111]/60 backdrop-blur-2xl"
+            : "border-border/50 bg-white/60 backdrop-blur-2xl",
+          mobileOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+        )}
+        aria-label="Navigation mobile"
+      >
+        <div className="overflow-hidden">
+          <div className="flex flex-col gap-1 px-6 pb-6 pt-4">
+            {filteredNavLinks.map((link, i) => (
+              <div
+                key={link.href}
+                style={{ animationDelay: `${i * 50}ms` }}
+                className={mobileOpen ? "animate-fade-in-left" : ""}
               >
                 <Link
-                  href="/contact"
+                  href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-5 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-gold-dark"
+                  className={cn(
+                    "block rounded-xl px-4 py-3 text-base font-medium transition-colors",
+                    pathname === link.href
+                      ? isDark
+                        ? "bg-gold/10 text-gold"
+                        : "bg-gold/10 text-gold"
+                      : isDark
+                        ? "text-white hover:bg-white/5 hover:text-gold"
+                        : "text-foreground hover:bg-secondary hover:text-gold",
+                  )}
                 >
-                  <Phone className="h-4 w-4" />
-                  Devis gratuit
+                  {link.label}
                 </Link>
-              </motion.div>
+              </div>
+            ))}
+            <div
+              style={{ animationDelay: `${filteredNavLinks.length * 50}ms` }}
+              className={mobileOpen ? "animate-fade-in-left" : ""}
+            >
+              <Link
+                href="/contact"
+                onClick={() => setMobileOpen(false)}
+                className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-5 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-gold-dark"
+              >
+                <Phone className="h-4 w-4" />
+                Devis gratuit
+              </Link>
             </div>
-          </motion.nav>
-        )}
-      </AnimatePresence>
-    </motion.header>
+          </div>
+        </div>
+      </nav>
+    </header>
   )
 }

@@ -17,72 +17,84 @@ import { FadeIn } from "@/components/fade-in"
 export const metadata: Metadata = {
   title: "Notre Histoire et Nos Valeurs | Artigold",
   description:
-    "D\u00e9couvrez l\u2019histoire d\u2019Artigold, entreprise de construction et r\u00e9novation tous corps d\u2019\u00e9tat. Nos valeurs : qualit\u00e9, transparence, efficacit\u00e9 et bien-\u00eatre.",
+    "Découvrez l'histoire d'Artigold, entreprise de construction et rénovation tous corps d'état. Nos valeurs : qualité, transparence, efficacité et bien-être.",
 }
 
 const milestones = [
   {
-    year: "2015",
-    title: "Naissance d\u2019Artigold",
+    year: "2006",
+    title: "Naissance d'Artigold",
     description:
-      "Cr\u00e9ation de l\u2019entreprise par des professionnels du b\u00e2timent passionn\u00e9s. Premiers chantiers de r\u00e9novation pour des particuliers en \u00cele-de-France.",
+      "Lancement de l'entreprise familiale.",
+  },
+  {
+    year: "2015",
+    title: "Changement d'optique d'attaque",
+    description:
+      "",
   },
   {
     year: "2017",
-    title: "D\u00e9veloppement tous corps d\u2019\u00c9tat",
+    title: "Développement tous corps d'État",
     description:
-      "Structuration de l\u2019offre multi-m\u00e9tiers : \u00e9lectricit\u00e9, plomberie, ma\u00e7onnerie, peinture, second \u0153uvre. Constitution d\u2019un r\u00e9seau d\u2019artisans qualifi\u00e9s.",
+      "Structuration de l'offre multi-métiers : électricité, plomberie, maçonnerie, peinture, second œuvre. Constitution d'un réseau d'artisans qualifiés.",
+  },
+  {
+    year: "2018",
+    title: "Expansion et diversification",
+    description:
+      "Création de l'entreprise par des professionnels du bâtiment passionnés. Premiers chantiers de rénovation pour des particuliers en Île-de-France.",
   },
   {
     year: "2019",
-    title: "Premier gros projet professionnel",
+    title: "Naissance d'Artigold",
     description:
-      "R\u00e9novation de 1 500 m\u00b2 de bureaux en site occup\u00e9 pour un grand groupe. D\u00e9but de l\u2019activit\u00e9 B2B et d\u00e9veloppement du pilotage de chantier.",
+      "Rénovation de 1 500 m2 de bureaux en site occupé pour un grand groupe. Début de l’activité B2B et développement du pilotage de chantier.",
   },
   {
     year: "2021",
     title: "Structuration & croissance",
     description:
-      "Recrutement de chefs de projet, mise en place de processus qualit\u00e9, partenariats avec des fournisseurs premium. Passage \u00e0 40 chantiers par an.",
+      "Recrutement de chefs de projet, mise en place de processus qualité, partenariats avec des fournisseurs premium. Passage à 40 chantiers par an.",
   },
   {
     year: "2024",
     title: "Vision actuelle",
     description:
-      "Accompagnement 360 pour particuliers et professionnels. Projets cl\u00e9 en main, qualit\u00e9 de finition, transparence totale. Plus de 200 projets r\u00e9alis\u00e9s.",
+      "Accompagnement 360° pour particuliers et professionnels. Projets clés en main, finitions de qualité, transparence totale. +500 projets réalisés en collaboration étroite avec les bureaux d’études et de contrôle.",
   },
 ]
 
 const values = [
   {
     icon: Award,
-    title: "Qualit\u00e9",
+    title: "Qualité",
     description:
-      "Des mat\u00e9riaux haut de gamme, des finitions impeccables, un contr\u00f4le rigoureux \u00e0 chaque \u00e9tape.",
+      "Des matériaux haut de gamme, des finitions impeccables, un contrôle rigoureux à chaque étape.",
   },
   {
     icon: Shield,
     title: "Transparence",
     description:
-      "Des devis d\u00e9taill\u00e9s, un suivi r\u00e9gulier, aucune surprise. Vous savez exactement o\u00f9 en sont vos travaux.",
+      "Des devis détaillés, un suivi régulier, aucune surprise. Vous savez exactement où en sont vos travaux.",
   },
   {
     icon: Heart,
     title: "Respect des personnes",
     description:
-      "Respect des lieux, des voisins, des occupants. Des \u00e9quipes form\u00e9es et bienveillantes.",
+      "Respect des lieux, des voisins, des occupants. Des équipes formées et bienveillantes.",
   },
   {
     icon: Lightbulb,
     title: "Engagement",
     description:
-      "Des d\u00e9lais tenus, des promesses respect\u00e9es. Nous nous engageons sur les r\u00e9sultats, pas seulement sur les moyens.",
+      "Des délais tenus, des promesses respectées. Nous nous engageons sur les résultats, pas seulement sur les moyens.",
   },
 ]
 
 const stats = [
-  { value: "500+", label: "Projets livr\u00e9s" },
-  { value: "10", label: "Ann\u00e9es d\u2019exp\u00e9rience" },
+  { value: "500+", label: "Projets livrés" },
+  { value: "20", label: "Années d’expérience" },
   { value: "4.8/5", label: "Note clients" },
   { value: "98%", label: "Clients satisfaits" },
 ]

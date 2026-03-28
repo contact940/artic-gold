@@ -28,28 +28,28 @@ export const metadata: Metadata = {
 
 const domains = [
   {
-    icon: Building,
-    title: "Bureaux & tertiaire",
-    description:
-      "Am\u00e9nagement et r\u00e9novation de plateaux de bureaux, salles de r\u00e9union, open spaces, espaces d\u2019accueil. Travaux en site occup\u00e9, respect des plannings d\u2019exploitation.",
-  },
-  {
-    icon: Store,
-    title: "Commerces & retail",
-    description:
-      "Boutiques, restaurants, agences, showrooms. Am\u00e9nagements sur mesure respectant les chartes d\u2019enseigne et les contraintes d\u2019exploitation.",
-  },
-  {
     icon: Factory,
-    title: "Industrie & logistique",
+    title: "Industrie & Logistique",
     description:
-      "Locaux techniques, zones de production, ateliers, entrep\u00f4ts. Interventions en milieu contraint avec respect des normes de s\u00e9curit\u00e9 industrielle.",
+      "Efficacité, sécurité, maîtrise. Intervention en milieux industriels exigeants. ",
   },
   {
     icon: Building2,
-    title: "Promotion immobili\u00e8re & logements collectifs",
+    title: "Bureaux et Tertiaire",
     description:
-      "Parties communes, halls, escaliers, appartements t\u00e9moins. Qualit\u00e9 de finition et respect des standards de la promotion immobili\u00e8re.",
+      "Performance, image, continuité. Intervention tous espaces, délais maîtrisés.",
+  },
+  {
+    icon: Building2,
+    title: "Syndic de copropriété",
+    description:
+      "Qualité, finition, conformité. Parties communes et habitat",
+  },
+  {
+    icon: Building,
+    title: "Image, cohérence, impact",
+    description:
+      "Chartes respectées, activité préservée",
   },
 ]
 
@@ -59,81 +59,81 @@ const steps = [
     step: "01",
     title: "Diagnostic & cadrage",
     description:
-      "Visites, relev\u00e9s, compr\u00e9hension des contraintes (site occup\u00e9, flux, normes). D\u00e9finition du p\u00e9rim\u00e8tre d\u2019intervention.",
+      "Analyse des contraintes et définition précise du cadre.",
   },
   {
     icon: Pencil,
     step: "02",
     title: "Conception & planification",
     description:
-      "Proposition technique, planning, phasage des travaux, budget d\u00e9taill\u00e9. Validation conjointe avec vos \u00e9quipes.",
+      "Anticiper pour mieux maîtriser. Solutions techniques, planning et budget validés ensemble.",
   },
   {
     icon: Hammer,
     step: "03",
-    title: "Ex\u00e9cution tous corps d\u2019\u00c9tat",
+    title: "Exécution TCE",
     description:
-      "Pilotage des \u00e9quipes, coordination des m\u00e9tiers (CVC, \u00e9lectricit\u00e9, second \u0153uvre, finitions). Reporting r\u00e9gulier.",
+      "Coordonner pour délivrer sans faille. Pilotage des équipes, suivi rigoureux, avancement maîtrisé.",
   },
   {
     icon: CheckCircle2,
     step: "04",
-    title: "R\u00e9ception & suivi",
+    title: "Réception & suivi",
     description:
-      "Contr\u00f4le qualit\u00e9, lev\u00e9e des r\u00e9serves, accompagnement post-chantier. Garanties d\u00e9cennale et biennale.",
+      "Livrer, contrôler, accompagner. Qualité vérifiée, réserves levées, garanties.",
   },
 ]
 
 const advantages = [
   {
     icon: HardHat,
-    title: "Chantiers en site occup\u00e9",
+    title: "Chantiers en site occupé",
     description:
-      "Continuit\u00e9 d\u2019activit\u00e9 garantie pendant les travaux.",
+      "Continuité d’activité garantie pendant les travaux.",
   },
   {
     icon: ShieldCheck,
     title: "Normes PMR & incendie",
-    description: "Conformit\u00e9 r\u00e9glementaire assur\u00e9e.",
+    description: "Conformité réglementaire assurée.",
   },
   {
     icon: Briefcase,
-    title: "Assurance d\u00e9cennale & RC Pro",
+    title: "Assurance décennale & RC Pro",
     description:
-      "Protection compl\u00e8te de votre investissement.",
+      "Protection complète de votre investissement.",
   },
   {
     icon: ChartBar,
     title: "Reporting & transparence",
     description:
-      "Suivi r\u00e9gulier de l\u2019avancement et du budget.",
+      "Suivi régulier de l’avancement et du budget.",
   },
 ]
 
 const references = [
   {
-    title: "R\u00e9novation de 1\u00a0200 m\u00b2 de bureaux",
+    title: "Rénovation de 1 200 m2 de bureaux",
     category: "Tertiaire",
-    surface: "1 200 m\u00b2",
-    highlight: "Livr\u00e9 en 4 mois",
+    surface: "1 200 m2",
+    highlight: "Livré en 4 mois",
   },
   {
-    title: "R\u00e9novation d\u2019un site industriel l\u00e9ger",
+    title: "Rénovation d'un site industriel léger",
     category: "Industrie",
-    surface: "1 200 m\u00b2",
-    highlight: "Z\u00e9ro interruption d\u2019activit\u00e9",
+    surface: "1 200 m2",
+    highlight: "Zéro interruption d'activité",
   },
   {
-    title: "Cr\u00e9ation d\u2019une boutique haut de gamme",
+    title: "Création d'une boutique haut de gamme",
     category: "Commerce",
-    surface: "120 m\u00b2",
-    highlight: "Ouverture dans les d\u00e9lais",
+    surface: "120 m2",
+    highlight: "Ouverture dans les délais",
   },
   {
-    title: "R\u00e9habilitation de logements collectifs",
+    title: "Réhabilitation de logements collectifs",
     category: "Promotion",
-    surface: "2 800 m\u00b2",
-    highlight: "48 logements livr\u00e9s",
+    surface: "2 800 m2",
+    highlight: "48 logements livrés",
   },
 ]
 
@@ -148,6 +148,7 @@ export default function ProfessionnelPage() {
           muted
           loop
           playsInline
+          preload="metadata"
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-linear-to-r from-black/70 via-black/50 to-black/30" />
@@ -195,7 +196,7 @@ export default function ProfessionnelPage() {
       <section className="border-y border-white/10 bg-[#0d0d0d] py-10">
         <FadeIn>
           <p className="mb-6 text-center text-sm font-semibold uppercase tracking-[0.2em] text-gold">
-            Ils nous confient leurs projets
+            Expérience & références
           </p>
           <LogoMarquee />
         </FadeIn>
@@ -206,11 +207,11 @@ export default function ProfessionnelPage() {
         <FadeIn>
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">
-              {"Nos domaines d\u2019intervention"}
+              {"Nos domaines"}
             </p>
             <h2 className="mt-4 text-balance text-3xl font-bold text-white md:text-4xl">
-              {"Des solutions adapt\u00e9es \u00e0"}{" "}
-              <span className="font-playfair italic text-gold">chaque secteur</span>
+              {"Des solutions adaptées à"}{" "}
+              <span className="font-playfair italic text-gold">{`chaque secteur`}</span>
             </h2>
           </div>
         </FadeIn>
@@ -302,41 +303,6 @@ export default function ProfessionnelPage() {
         </div>
       </SectionWrapper>
 
-      {/* References */}
-      <SectionWrapper variant="dark-muted">
-        <FadeIn>
-          <div className="text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">
-              R\u00e9f\u00e9rences
-            </p>
-            <h2 className="mt-4 text-balance text-3xl font-bold text-white md:text-4xl">
-              Quelques{" "}
-              <span className="font-playfair italic text-gold">projets types</span>
-            </h2>
-          </div>
-        </FadeIn>
-        <div className="mt-16 grid gap-6 sm:grid-cols-2">
-          {references.map((ref, i) => (
-            <FadeIn key={ref.title} delay={i * 100}>
-              <div className="group flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-8 transition-all duration-300 hover:-translate-y-1 hover:border-gold/30 hover:bg-white/8 hover:shadow-xl hover:shadow-gold/5">
-                <div className="flex items-center justify-between">
-                  <span className="rounded-full bg-gold/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-gold">
-                    {ref.category}
-                  </span>
-                  <span className="text-sm font-semibold text-white/80">
-                    {ref.surface}
-                  </span>
-                </div>
-                <h3 className="text-base font-bold text-white">
-                  {ref.title}
-                </h3>
-                <p className="text-sm text-white/50">{ref.highlight}</p>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
-      </SectionWrapper>
-
       {/* Case Studies */}
       <SectionWrapper variant="dark">
         <FadeIn>
@@ -351,33 +317,68 @@ export default function ProfessionnelPage() {
           </div>
         </FadeIn>
         <div className="mt-16 grid gap-8 md:grid-cols-2">
-          {[
-            {
-              title: "R\u00e9novation d\u2019un hall d\u2019accueil corporate",
-              before:
-                "Hall vieillissant, \u00e9clairage inadapt\u00e9, sols d\u00e9grad\u00e9s",
-              after:
-                "Espace modernis\u00e9 avec sol en pierre naturelle, \u00e9clairage LED et signal\u00e9tique int\u00e9gr\u00e9e",
-              figures: [
-                { label: "Surface", value: "320 m\u00b2" },
-                { label: "Dur\u00e9e", value: "6 semaines" },
-                { label: "Activit\u00e9", value: "Maintenue" },
-              ],
-            },
-            {
-              title: "Mise aux normes PMR d\u2019un ERP",
-              before:
-                "B\u00e2timent non conforme aux normes d\u2019accessibilit\u00e9 PMR et s\u00e9curit\u00e9 incendie",
-              after:
-                "Mise en conformit\u00e9 totale : rampes, sanitaires adapt\u00e9s, alarmes incendie, balisage",
-              figures: [
-                { label: "Surface", value: "1 400 m\u00b2" },
-                { label: "Durée", value: "10 semaines" },
-                { label: "Conformité", value: "100%" },
-              ],
-            },
+          {[{
+            title: "Tertiaire",
+            before:
+              "Espaces de travail vieillissants, aménagement peu fonctionnel",
+            after:
+              "Rénovation de 1200 m² de salles de reunion.",
+            figures: [
+              { label: "Surface", value: "1200 m²" },
+              { label: "Durée", value: "16 semaines" },
+              { label: "Localisation", value: "Paris 16" },
+            ],
+          },
+          {
+            title: "Industrie",
+            before:
+              "Sols dégradés, usure importante dans un environnement industriel",
+            after:
+              "Rénovation et sablage de sols sur 14 000 m².",
+            figures: [
+              { label: "Surface", value: "14 000 m²" },
+              { label: "Type", value: "Industrie" },
+              { label: "Intervention", value: "Saint-Ouen-l'Aumône" },
+            ],
+          },
+          {
+            title: "Tertiaire",
+            before:
+              "Parties communes dégradées, manque d’entretien et de conformité",
+            after:
+              "Rénovation de deux immeubles (parties communes)",
+            figures: [
+              { label: "Surface", value: "320 m²" },
+              { label: "Durée", value: "8 semaines" },
+              { label: "Localisation", value: "Paris 19" },
+            ],
+          },
+          {
+            title: "Tertiaire",
+            before:
+              "Bâtiment non conforme aux normes IGH et sécurité incendie",
+            after:
+              "Mise en conformité complète avec validation des normes en vigueur",
+            figures: [
+              { label: "Surface", value: "1600 m²" },
+              { label: "Durée", value: "3 mois" },
+              { label: "Localisation", value: "Paris 15" },
+            ],
+          },
+          {
+            title: "Tertiaire",
+            before:
+              "Agence vieillissante, image non conforme aux standards",
+            after:
+              "Rénovation agence bancaire, Agence modernisée avec une image professionnelle et accueillante",
+            figures: [
+              { label: "Surface", value: "90 m²" },
+              { label: "Durée", value: "4 semaines" },
+              { label: "Localisation", value: "Lille" },
+            ],
+          }
           ].map((cs, i) => (
-            <FadeIn key={cs.title} delay={i * 150}>
+            <FadeIn key={cs.title + i} delay={i * 150}>
               <div className="group rounded-2xl border border-white/10 bg-white/5 p-8 transition-all duration-300 hover:border-gold/30 hover:shadow-xl hover:shadow-gold/5">
                 <h3 className="text-lg font-bold text-white">{cs.title}</h3>
                 <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -426,10 +427,10 @@ export default function ProfessionnelPage() {
               <span className="font-playfair italic text-gold">terrain</span>
             </h2>
             <p className="mt-6 text-base leading-relaxed text-white/70">
-              {"Fond\u00e9e en 2015, Artigold s\u2019est rapidement orient\u00e9e vers les projets professionnels en capitalisant sur son expertise tous corps d\u2019\u00e9tat. Bureaux, commerces, sites industriels, \u00e9tablissements recevant du public : chaque chantier renforce notre savoir-faire et notre capacit\u00e9 \u00e0 r\u00e9pondre aux exigences les plus strictes."}
+              {"Artigold s'est rapidement orientée vers les projets professionnels en capitalisant sur son expertise tous corps d'état. Bureaux, commerces, sites industriels, établissements recevant du public : chaque chantier renforce notre savoir-faire et notre capacité à répondre aux exigences les plus strictes."}
             </p>
             <p className="mt-4 text-base leading-relaxed text-white/70">
-              {"Certifi\u00e9e Qualibat, titulaire d\u2019une assurance d\u00e9cennale et engag\u00e9e dans une d\u00e9marche RSE, Artigold est le partenaire de confiance des entreprises et des institutions en \u00cele-de-France."}
+              {"Titulaire d'une assurance décennale et engagée dans une démarche RSE, Artigold est le partenaire de confiance des entreprises et des institutions en Île-de-France."}
             </p>
           </FadeIn>
           <FadeIn delay={150}>
@@ -453,25 +454,18 @@ export default function ProfessionnelPage() {
               Lancez votre projet
             </p>
             <h2 className="mt-4 text-balance text-3xl font-bold text-white md:text-4xl">
-              Un projet professionnel a{" "}
-              <span className="font-playfair italic text-gold">discuter</span> ?
+              Un projet professionnel ?
             </h2>
             <p className="mt-6 text-base leading-relaxed text-white/60">
-              {"\u00c9changez avec un chef de projet Artigold pour obtenir une proposition technique adapt\u00e9e \u00e0 vos enjeux."}
+              {"Échangez avec un chef de projet Artigold pour obtenir une proposition technique adaptée à vos enjeux."}
             </p>
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link
                 href="/contact?type=professionnel"
                 className="group inline-flex items-center gap-2 rounded-full bg-gold px-8 py-4 text-base font-semibold text-primary-foreground transition-all duration-300 hover:bg-gold-dark hover:shadow-lg hover:shadow-gold/25"
               >
-                {"\u00c9changer avec un chef de projet"}
+                {"Échanger avec un chef de projet"}
                 <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
-              <Link
-                href="/realisations"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-8 py-4 text-base font-semibold text-white transition-all duration-300 hover:bg-white/10"
-              >
-                Voir nos r\u00e9alisations
               </Link>
             </div>
           </FadeIn>
