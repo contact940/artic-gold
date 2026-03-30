@@ -23,23 +23,6 @@ export function SiteFooter() {
       <div className="section-divider" />
 
       <div className="mx-auto max-w-7xl px-6 pt-20 pb-10">
-        {/* Top section: Large CTA */}
-        <div className="mb-20 flex flex-col items-center text-center">
-          <p className="text-sm font-semibold uppercase tracking-widest text-gold">
-            Prêt à démarrer ?
-          </p>
-          <h2 className="mt-4 max-w-2xl text-balance text-3xl font-bold tracking-tight md:text-4xl">
-            Parlons de votre{" "}
-            <span className="font-playfair italic text-gold">projet</span>
-          </h2>
-          <Link
-            href="/contact"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-gold px-8 py-4 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:bg-gold-dark hover:shadow-lg hover:shadow-gold/20"
-          >
-            Demander un devis gratuit
-            <ArrowUpRight className="h-4 w-4" />
-          </Link>
-        </div>
 
         {/* Separator */}
         <div className="mb-16 border-t border-white/10" />

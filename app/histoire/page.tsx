@@ -162,7 +162,7 @@ export default async function HistoirePage({
                 <span className="mr-2">&larr;</span> {backLabel}
               </Link>
               <h1 className="max-w-3xl text-balance text-4xl font-bold leading-[1.1] tracking-tight text-white md:text-5xl lg:text-6xl">
-                {"L\u2019histoire d\u2019"}
+                {"L'histoire d'"}
                 <span className="font-playfair italic text-gold">
                   Artigold
                 </span>
@@ -170,7 +170,7 @@ export default async function HistoirePage({
             </FadeIn>
             <FadeIn delay={150}>
               <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-white/75">
-                {"Une entreprise g\u00e9n\u00e9rale du b\u00e2timent n\u00e9e du terrain, au service des particuliers et des professionnels."}
+                {"Une entreprise générale du bâtiment née du terrain, au service des particuliers et des professionnels."}
               </p>
             </FadeIn>
           </div>

@@ -49,9 +49,9 @@ const values = [
   },
   {
     icon: Leaf,
-    title: "Explications claires",
+    title: "Service après-vente",
     description:
-      "On vous explique tout simplement, sans jargon technique. Vous comprenez chaque étape.",
+      "Nous restons disponibles après la livraison pour toute question ou ajustement. Votre satisfaction est notre priorité.",
   },
 ]
 
@@ -188,7 +188,7 @@ export default function ParticulierPage() {
           <div className="mx-auto max-w-7xl">
             <FadeIn>
               <h1 className="max-w-2xl text-balance text-4xl font-bold leading-[1.1] tracking-tight text-white md:text-5xl lg:text-6xl">
-                Rénovez votre maison en toute{" "}
+                Rénovez votre habitat en toute{" "}
                 <span className="font-playfair italic text-gold">sérénité</span>
               </h1>
             </FadeIn>
@@ -236,8 +236,8 @@ export default function ParticulierPage() {
         <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {processSteps.map((s, i) => (
             <FadeIn key={s.step} delay={i * 100}>
-              <div className="group relative flex h-full flex-col rounded-2xl border border-border bg-card p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-gold/20">
-                <span className="text-5xl font-bold text-gold/10 transition-colors duration-300 group-hover:text-gold/20">
+              <div className="group relative flex h-full flex-col rounded-2xl border border-border bg-card p-8 transition-all duration-300 hover:-translate-y-1 shadow-lg hover:shadow-2xl ">
+                <span className="text-5xl font-bold text-gold/30 transition-colors duration-300 group-hover:text-gold/20">
                   {s.step}
                 </span>
                 <div className="mt-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10 transition-colors duration-300 group-hover:bg-gold/20">
@@ -259,12 +259,12 @@ export default function ParticulierPage() {
       <SectionWrapper variant="muted">
         <FadeIn>
           <div className="text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">
+            {/* <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">
               Nos expertises
-            </p>
+            </p> */}
             <h2 className="mt-4 text-balance text-3xl font-bold text-foreground md:text-4xl">
-              Nos travaux pour les{" "}
-              <span className="font-playfair italic text-gold">particuliers</span>
+              Nos {" "}
+              <span className="font-playfair italic text-gold">expertises</span>
             </h2>
           </div>
         </FadeIn>
